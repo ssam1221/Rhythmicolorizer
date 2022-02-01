@@ -14,18 +14,19 @@ export default class BGMDatabase {
         try {
             debug.log(`Initializing...`);
             this.BGMDataList = await (await fetch(`data/BGMList.json`)).json();
-            console.log(this.BGMDataList)
+            // debug.log(this.BGMDataList)
 
             for (let idx = 0; idx < this.BGMDataList.length; idx++) {
                 const BGMData = this.BGMDataList[idx];
                 this.BGMDataList[idx].coverImage = this.getCoverImage(BGMData.title);
                 const noteList = await (await fetch(`data/notes/${BGMData.title}.json`)).json();
                 this.BGMDataList[idx].data.noteList = noteList;
-                console.log(noteList)
+                // debug.log(noteList);
+                debug.log(`Loading [${BGMData.title}]...`)
             }
             debug.log(`BGM Data : `, this.BGMDataList);
         } catch (err) {
-
+            debug.error(err);
         }
     }
 

@@ -21,7 +21,6 @@
 }
 
 @keyframes PressedNoteShow {
-
     0% {
         transform: scale(6.0);
         opacity: 0.1;
@@ -41,39 +40,117 @@
     }
 }
 
-div.keynoteChecker {
+@keyframes GetReadyAnimation {
+    0% {
+        transform: scale(10.0);
+        color: grey;
+    }
+
+    20% {
+        transform: scale(1.0);
+        color: black;
+    }
+
+    100% {
+        transform: scale(1.0);
+        color: black;
+    }
+}
+
+div#GamePlayVideo_Overlay {
     position: absolute;
-    height: 0;
-    width: 5px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #888888;
+    opacity: 0.4;
+}
+
+div#keynotePressedContainer {
+    font-size: 128px;
+    position: absolute;
+    left: 0;
+    width: 100%;
     height: 100%;
 }
 
-div.keynoteChecker#keynoteCheckerLeft {
-    left: 145px;
-    background-color: red;
+div#keynotesContainerBackground,
+div#keynotesContainer {
+    font-size: 128px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 64px);
+    width: 100%;
+    height: 160px;
 }
 
-div.keynoteChecker#keynoteCheckerRight {
-    left: 205px;
-    background-color: green;
+div#keynotesContainerBackground {
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 1%,
+            white 6%,
+            white 13.5%,
+            rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
+}
+
+
+#youtubeVideoPlayer {
+    width: 800px;
+    height: 100%;
+}
+
+#getReadyText {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 128px;
+    text-align: center;
+    display: grid;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+div#getReadyText.GetReadyAnimation {
+    animation: GetReadyAnimation linear 0.5s;
+}
+
+
+div#keynoteChecker {
+    position: absolute;
+    width: 60px;
+    height: 100%;
+    left: 48px;
+    top: 0;
+
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 20%,
+            white 42%,
+            white 56%,
+            rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
 }
 
 div.MUSIC_NOTE {
     position: absolute;
     left: 0px;
-    top: calc(50% - 64px);
+    /* top: calc(50% - 64px); */
     width: 100%;
-    height: 40%;
+    /* height: 128px; */
 }
 
 div.MUSIC_NOTE.showNote {
     opacity: 0;
-    animation: NoteShow linear 1s;
+    animation: NoteShow linear 2s;
 }
 
 div.PRESSED_NOTE {
     position: absolute;
-    left: calc(20% - 32px);
+    /* left: calc(20% - 32px); */
+    left: 28px;
     top: calc(50% - 64px);
     width: 100px;
     height: 20%;
@@ -85,4 +162,14 @@ div.PRESSED_NOTE {
 div.PRESSED_NOTE.showNote {
     opacity: 0;
     animation: PressedNoteShow linear 0.2s;
+}
+
+div#Difficulty {
+    padding: 16px;
+    font-size: 32px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition-duration: 1s;
 }

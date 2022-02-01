@@ -7,11 +7,13 @@ const debug = new Debug({
 
 export default class NoteCreator {
 
-    static DIFFICULITY = {
+    static Difficulty = {
         EASY: `Easy`,
         NORMAL: `Normal`,
         HARD: `Hard`,
     }
+
+    static currentDifficulty = ``;
 
     static MUSIC_NOTE_CLASS_NAME = `MUSIC_NOTE`;
     static PRESSED_CLASS_NAME = `PRESSED_NOTE`;
@@ -20,6 +22,12 @@ export default class NoteCreator {
     static currentNoteIndex = 0;
     static currentKeyPressNoteIndex = 0;
 
+    static NOTE_SPEED = 2;
+    static NOTE_ACTIVATING_TIMESTAMP = 1300;
+    static NOTE_SHOWING_TIMESTAMP = this.NOTE_SPEED * 1000;
+    // static NOTE_CHECK_DELAY_TIMESTAMP = 200; // / 2;
+    static NOTE_CHECK_DELAY_TIMESTAMP = 1200;
+    // static NOTE_CHECK_DELAY_TIMESTAMP = parseInt(this.NOTE_SHOWING_TIMESTAMP + (370 / this.NOTE_SPEED)); // / 2;
 
     static keypressDivInterval;
 
@@ -29,10 +37,18 @@ export default class NoteCreator {
     static keypressNotes = [];
     static timeoutFunctionList = [];
 
+    static activateNoteList = [];
+
     static keynotesContainer = null;
     static pressedkeynotesContainer = null;
 
     static StartTime = null;
+    static NOTE_STATUS = {
+        IDLE: `Idle`,
+        SHOWING: `Showing`,
+        ACTIVATING: `Activating`,
+        USED: `Used`
+    }
     static PointCheck = {
         Perfect: 0,
         Good: 0,
@@ -58,11 +74,18 @@ export default class NoteCreator {
         this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
         return this.currentKeyPressNoteIndex;
     }
+    static getCurrentDifficulty() {
+        return this.currentDifficulty;
+    }
 
-    static setNotes(bgmTitle, difficulity) {
-        debug.log(`Set notes for title : [${difficulity}][${bgmTitle}]...`);
-        console.log(BGMDatabase.getDataByTitle(bgmTitle))
-        this.noteList = BGMDatabase.getDataByTitle(bgmTitle).data.noteList[difficulity];
+    static setNotes(bgmTitle, Difficulty) {
+        debug.log(`Set notes for title : [${Difficulty}][${bgmTitle}]...`);
+        this.noteList = BGMDatabase.getDataByTitle(bgmTitle).data.noteList[Difficulty];
+        for (let idx = 0; idx < this.noteList.length; idx++) {
+            this.noteList[idx].status = this.NOTE_STATUS.IDLE;
+        }
+        this.currentDifficulty = Difficulty;
+        document.getElementById(`Difficulty`).innerHTML = `Difficulty : ${Difficulty}`;
         debug.log(`Notes : `, this.noteList);
     }
 
@@ -102,17 +125,32 @@ export default class NoteCreator {
     }
 
     static async start() {
+        const self = this;
         debug.log(`Start to create notes...`);
+        debug.log(`Note create delay : ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
         // Temp
-        this.setNotes(`A Fallen Leaf`, this.DIFFICULITY.EASY);
+        this.setNotes(`두근두근! 드디어!! 대모험 시작!!!`, this.Difficulty.NORMAL);
         // Temp
 
         for (const _note of this.noteList) {
             ((note) => {
+                debug.log(`Note show timestamp : ${note.timestamp} - ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
                 this.timeoutFunctionList.push(
                     setTimeout(() => {
                         this.renderMusicNote(note.key);
-                    }, note.timestamp)
+                        debug.log(`Showing note : ${note.key}`);
+                        note.status = self.NOTE_STATUS.SHOWING;
+                        setTimeout(() => {
+                            debug.log(`Activate note : ${note.key} / ${self.NOTE_ACTIVATING_TIMESTAMP}`);
+                            note.status = self.NOTE_STATUS.ACTIVATING;
+                            // self.activateNoteList.push(note);
+                        }, self.NOTE_ACTIVATING_TIMESTAMP);
+
+                        setTimeout(() => {
+                            debug.log(`Used note : ${note.key}`);
+                            note.status = self.NOTE_STATUS.USED;
+                        }, self.NOTE_SHOWING_TIMESTAMP);
+                    }, note.timestamp - self.NOTE_CHECK_DELAY_TIMESTAMP)
                 )
             })(_note);
         }
@@ -127,40 +165,46 @@ export default class NoteCreator {
     }
 
     static renderMusicNote(_key) {
+        const self = this;
         ((key) => {
             const note = document.getElementById(`musicNote_${this.getCurrentNoteIndex()}`);
-            debug.log(`Note      : [${key}] : Assigned to : ${this.currentNoteIndex}`);
+            // debug.log(`Note      : [${key}] : Assigned to : ${this.currentNoteIndex}`);
             note.innerText = key;
+            // debug.log(`Render Music Note : [${key}]`, note);
 
             note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME} showNote`);
 
             setTimeout(() => {
                 // keypressedNote.setAttribute(`class`, `hideNote`);
+                // debug.log(`Render Music Note : [${key}]`, note);
                 note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME}`);
                 note.innerText = ``;
-            }, 1000)
-            debug.log(key)
+            }, self.NOTE_SHOWING_TIMESTAMP)
         })(_key);
     }
 
     static keypressNote(_key) {
         ((key) => {
             const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
-            debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
+            // debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
             keypressedNote.innerText = key;
 
             keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME} showNote`);
-
+            this.checkPressedKeyCorrected(key);
             setTimeout(() => {
                 // keypressedNote.setAttribute(`class`, `hideNote`);
                 keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME}`);
                 keypressedNote.innerText = ``;
             }, 1000)
+
         })(_key);
     }
 
     static checkPressedKeyCorrected(key) {
+        const diff = new Date().getTime() - this.StartTime;
+        debug.log(`Key pressed ${key} with timestamp : ${diff}`);
 
+        this.currentKeyPressNoteIndex;
     }
 
     static onkeypress(e) {

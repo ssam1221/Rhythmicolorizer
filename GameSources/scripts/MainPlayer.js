@@ -31,9 +31,9 @@ import NoteCreator from "./NoteCreator";
 
         document.onclick = async () => {
             const player = await BGMPlayer.setVideo(`두근두근! 드디어!! 대모험 시작!!!`);
+            NoteCreator.start();
             player.play();
         }
 
-        NoteCreator.start();
     };
 })();
