@@ -1,4 +1,5 @@
 import Debug from "./Debug";
+import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./BGMPlayer";
 import BGMSelector from "./BGMSelector";
 import KeyboardEventListener from "./KeyboardEventListener";
@@ -12,9 +13,9 @@ import NoteCreator from "./NoteCreator";
             filename: `MainPlayer`
         });
         debug.log(`Start`);
-
-        await BGMPlayer.initialize();
+        await BGMDatabase.initialize();
         await BGMSelector.initialize();
+        await BGMPlayer.initialize();
         NoteCreator.initialize();
         // document.getElementById("test").src = BGMPlayer.getCoverImage("Night Beach Memories");
 

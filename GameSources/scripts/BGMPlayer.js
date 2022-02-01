@@ -1,4 +1,6 @@
 import BGMSelector from "./BGMSelector";
+import BGMDatabase from "./BGMDatabase";
+import NoteCreator from "./NoteCreator";
 import Debug from "./Debug";
 
 const debug = new Debug({
@@ -19,13 +21,7 @@ export default class BGMPlayer {
         return new Promise((resolve, reject) => {
 
             debug.log(`SetVideo : [${title}]`);
-            const selectedBGM = (() => {
-                for (const bgm of BGMSelector.getBGMListInfo()) {
-                    if (bgm.title === title) {
-                        return bgm;
-                    }
-                }
-            })();
+            const selectedBGM = BGMDatabase.getDataByTitle(title);
 
             debug.log(selectedBGM);
             // debug.log(selectedBGM.data.youtube)
@@ -59,6 +55,7 @@ export default class BGMPlayer {
             //    the player should play for six seconds and then stop.
 
             function onPlayerStateChange(event) {
+                NoteCreator.start();
                 console.log(`onPlayerStateChange `, event)
                 if (event.data === YT.PlayerState.PLAYING) {
                     // setTimeout(stopVideo, 6000);

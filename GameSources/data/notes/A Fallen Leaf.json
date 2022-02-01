@@ -1,41 +1,43 @@
-[{
-    "key": "A",
-    "type": "",
-    "timestamp": 1000
-}, {
-    "key": "b",
-    "type": "",
-    "timestamp": 1200
-}, {
-    "key": "c",
-    "type": "",
-    "timestamp": 1400
-}, {
-    "key": "D",
-    "type": "",
-    "timestamp": 1600
-}, {
-    "key": "e",
-    "type": "",
-    "timestamp": 1000
-}, {
-    "key": "f",
-    "type": "",
-    "timestamp": 1800
-}, {
-    "key": "g",
-    "type": "",
-    "timestamp": 2000
-}, {
-    "key": "h",
-    "type": "",
-    "timestamp": 2200
-}, {
-    "key": "i",
-    "type": "",
-    "timestamp": 2400
-}, {
-    "key": "j",
-    "type": "",
-    "timestamp": 2600
-}]
+{
+    "Easy": [{
+        "key": "A",
+        "type": "",
+        "timestamp": 1000
+    }, {
+        "key": "b",
+        "type": "",
+        "timestamp": 1200
+    }, {
+        "key": "c",
+        "type": "",
+        "timestamp": 1400
+    }, {
+        "key": "D",
+        "type": "",
+        "timestamp": 1600
+    }, {
+        "key": "e",
+        "type": "",
+        "timestamp": 1000
+    }, {
+        "key": "f",
+        "type": "",
+        "timestamp": 1800
+    }, {
+        "key": "g",
+        "type": "",
+        "timestamp": 2000
+    }, {
+        "key": "h",
+        "type": "",
+        "timestamp": 2200
+    }, {
+        "key": "i",
+        "type": "",
+        "timestamp": 2400
+    }, {
+        "key": "j",
+        "type": "",
+        "timestamp": 2600
+    }]
+}

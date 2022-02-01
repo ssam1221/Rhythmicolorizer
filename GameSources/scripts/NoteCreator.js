@@ -1,4 +1,5 @@
 import Debug from "./Debug";
+import BGMDatabase from "./BGMDatabase";
 
 const debug = new Debug({
     filename: `NoteCreator`
@@ -6,11 +7,19 @@ const debug = new Debug({
 
 export default class NoteCreator {
 
+    static DIFFICULITY = {
+        EASY: `Easy`,
+        NORMAL: `Normal`,
+        HARD: `Hard`,
+    }
+
     static MUSIC_NOTE_CLASS_NAME = `MUSIC_NOTE`;
     static PRESSED_CLASS_NAME = `PRESSED_NOTE`;
     static MAX_KEYPRESS_NOTES = 100;
     static KEYPRESS_FPS = 1000 / this.MAX_KEYPRESS_NOTES;
+    static currentNoteIndex = 0;
     static currentKeyPressNoteIndex = 0;
+
 
     static keypressDivInterval;
 
@@ -36,14 +45,25 @@ export default class NoteCreator {
         this.keynotesContainer = document.getElementById(`keynotesContainer`);
         this.pressedkeynotesContainer = document.getElementById(`keynotePressedContainer`);
         this.createkeypressNotes();
-        this.keypressDivInterval = setInterval(() => {
-            this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
-        }, this.KEYPRESS_FPS);
+        // this.keypressDivInterval = setInterval(() => {
+        //     this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
+        // }, this.KEYPRESS_FPS);
     }
 
-    static async setNotes(bgmTitle) {
-        debug.log(`Set notes for title : [${bgmTitle}]...`);
-        this.noteList = await (await fetch(`data/notes/${bgmTitle}.json`)).json();
+    static getCurrentNoteIndex() {
+        this.currentNoteIndex = (++this.currentNoteIndex) % this.MAX_KEYPRESS_NOTES;
+        return this.currentNoteIndex;
+    }
+    static getCurrentKeyPressNoteIndex() {
+        this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
+        return this.currentKeyPressNoteIndex;
+    }
+
+    static setNotes(bgmTitle, difficulity) {
+        debug.log(`Set notes for title : [${difficulity}][${bgmTitle}]...`);
+        console.log(BGMDatabase.getDataByTitle(bgmTitle))
+        this.noteList = BGMDatabase.getDataByTitle(bgmTitle).data.noteList[difficulity];
+        debug.log(`Notes : `, this.noteList);
     }
 
     static createkeypressNotes() {
@@ -83,7 +103,10 @@ export default class NoteCreator {
 
     static async start() {
         debug.log(`Start to create notes...`);
-        await this.setNotes(`A Fallen Leaf`);
+        // Temp
+        this.setNotes(`A Fallen Leaf`, this.DIFFICULITY.EASY);
+        // Temp
+
         for (const _note of this.noteList) {
             ((note) => {
                 this.timeoutFunctionList.push(
@@ -97,6 +120,7 @@ export default class NoteCreator {
     }
 
     static stop() {
+        this.noteList = [];
         for (const timeoutFunc of this.timeoutFunctionList) {
             clearTimeout(timeoutFunc);
         }
@@ -104,7 +128,8 @@ export default class NoteCreator {
 
     static renderMusicNote(_key) {
         ((key) => {
-            const note = document.getElementById(`musicNote_${this.currentKeyPressNoteIndex}`);
+            const note = document.getElementById(`musicNote_${this.getCurrentNoteIndex()}`);
+            debug.log(`Note      : [${key}] : Assigned to : ${this.currentNoteIndex}`);
             note.innerText = key;
 
             note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME} showNote`);
@@ -120,17 +145,17 @@ export default class NoteCreator {
 
     static keypressNote(_key) {
         ((key) => {
-            const keypressedNote = document.getElementById(`keypressNote_${this.currentKeyPressNoteIndex}`);
+            const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
             debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
             keypressedNote.innerText = key;
 
             keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME} showNote`);
 
-            // setTimeout(() => {
-            //     // keypressedNote.setAttribute(`class`, `hideNote`);
-            //     keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME}`);
-            //     keypressedNote.innerText = ``;
-            // }, 1000)
+            setTimeout(() => {
+                // keypressedNote.setAttribute(`class`, `hideNote`);
+                keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME}`);
+                keypressedNote.innerText = ``;
+            }, 1000)
         })(_key);
     }
 

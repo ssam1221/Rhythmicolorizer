@@ -1,4 +1,5 @@
 import Debug from "./Debug";
+import BGMDatabase from "./BGMDatabase";
 
 const debug = new Debug({
     filename: `BGMSelector`
@@ -14,14 +15,9 @@ export default class BGMSelector {
         this.BGMData = await (await fetch(`data/BGMList.json`)).json();
 
         for (const title in this.BGMData) {
-            this.BGMData[title].coverImage = this.getCoverImage(title);
+            this.BGMData[title].coverImage = BGMDatabase.getCoverImage(title);
         }
 
-        debug.log(`BGM Data : `, this.BGMData);
-    }
-
-    static getCoverImage(title) {
-        return `/data/coverImages/${title}.png`;
     }
 
     static getBGMListInfo() {
