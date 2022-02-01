@@ -1,18 +1,136 @@
 {
     "Easy": [{
-        "key": "!",
-        "timestamp": 5100
-    },
-    {
-        "key": "v",
-        "timestamp": 6300
-    },
-    {
-        "key": "a",
-        "timestamp": 8700
-    },
-    {
-        "key": "r",
-        "timestamp": 11100
-    }]
+            "key": "a",
+            "timestamp": 5100
+        },
+        {
+            "key": "d",
+            "timestamp": 6300
+        },
+        {
+            "key": "v",
+            "timestamp": 8700
+        },
+        {
+            "key": "e",
+            "timestamp": 11100
+        },
+        {
+            "key": "n",
+            "timestamp": 13500
+        },
+        {
+            "key": "t",
+            "timestamp": 15900
+        },
+        {
+            "key": "u",
+            "timestamp": 18300
+        },
+        {
+            "key": "r",
+            "timestamp": 20700
+        },
+        {
+            "key": "e",
+            "timestamp": 23100
+        }
+    ],
+    "Normal": [{
+            "key": "g",
+            "timestamp": 1800
+        },
+        {
+            "key": "o",
+            "timestamp": 3000
+        },
+        {
+            "key": "g",
+            "timestamp": 4000
+        },
+        {
+            "key": "o",
+            "timestamp": 4500
+        },
+        {
+            "key": "!",
+            "timestamp": 5100
+        },
+        {
+            "key": "a",
+            "timestamp": 6300
+        },
+        {
+            "key": "d",
+            "timestamp": 6900
+        },
+        {
+            "key": "v",
+            "timestamp": 7350
+        },
+        {
+            "key": "e",
+            "timestamp": 8100
+        },
+        {
+            "key": "n",
+            "timestamp": 8400
+        },
+        {
+            "key": "t",
+            "timestamp": 8700
+        },
+        {
+            "key": "u",
+            "timestamp": 9300
+        },
+        {
+            "key": "r",
+            "timestamp": 9750
+        },
+        {
+            "key": "e",
+            "timestamp": 10500
+        },
+        {
+            "key": "i",
+            "timestamp": 10800
+        },
+        {
+            "key": "s",
+            "timestamp": 11100
+        },
+        {
+            "key": "s",
+            "timestamp": 11700
+        },
+        {
+            "key": "t",
+            "timestamp": 12150
+        },
+        {
+            "key": "a",
+            "timestamp": 12900
+        },
+        {
+            "key": "r",
+            "timestamp": 13500
+        },
+        {
+            "key": "t",
+            "timestamp": 14100
+        },
+        {
+            "key": "e",
+            "timestamp": 14550
+        },
+        {
+            "key": "d",
+            "timestamp": 15300
+        },
+        {
+            "key": "!",
+            "timestamp": 15600
+        }
+    ]
 }
