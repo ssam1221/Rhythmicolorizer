@@ -51,6 +51,17 @@ export default class NoteCreator {
         ACTIVATING: `Activating`,
         USED: `Used`
     }
+    static NOTE_SIZE = {
+        HEIGHT: `128px`
+    }
+
+    static NOTE_POSITION = {
+        '`1234567890-=\\~!@#$%^&*()_+|': 0,
+        'qwertyuiop[]QWERTYUIOP{}': 1,
+        'asdfghjkl;\'ASDFGHJKL:"': 2,
+        'zxcvbnm,./ZXCVBNM<>?': 3,
+    }
+
     static PointCheck = {
         Perfect: 0,
         Good: 0,
@@ -136,20 +147,21 @@ export default class NoteCreator {
 
         for (const _note of this.noteList) {
             ((note) => {
-                debug.log(`Note show timestamp : ${note.timestamp} - ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
+                // debug.log(`Note show timestamp : ${note.timestamp} - ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
                 this.timeoutFunctionList.push(
                     setTimeout(() => {
                         this.renderMusicNote(note.key);
-                        debug.log(`Showing note : ${note.key}`);
+
+                        // debug.log(`Showing note : ${note.key}`);
                         note.status = self.NOTE_STATUS.SHOWING;
                         setTimeout(() => {
-                            debug.log(`Activate note : ${note.key} / ${self.NOTE_ACTIVATING_TIMESTAMP}`);
+                            // debug.log(`Activate note : ${note.key} / ${self.NOTE_ACTIVATING_TIMESTAMP}`);
                             note.status = self.NOTE_STATUS.ACTIVATING;
                             // self.activateNoteList.push(note);
                         }, self.NOTE_ACTIVATING_TIMESTAMP);
 
                         setTimeout(() => {
-                            debug.log(`Used note : ${note.key}`);
+                            // debug.log(`Used note : ${note.key}`);
                             note.status = self.NOTE_STATUS.USED;
                         }, self.NOTE_SHOWING_TIMESTAMP);
                     }, note.timestamp - self.NOTE_CHECK_DELAY_TIMESTAMP)
@@ -166,12 +178,26 @@ export default class NoteCreator {
         }
     }
 
+    static setNotePosition(note) {
+        const key = note.innerText;
+        for (const rule in this.NOTE_POSITION) {
+            if (rule.indexOf(key) > -1) {
+                const topPosition = 160 * this.NOTE_POSITION[rule];
+                note.setAttribute(`position`, this.NOTE_POSITION[rule]);
+                note.style.top = `calc(50% - ${320 - topPosition}px`;
+                break;
+            }
+        }
+    }
+
     static renderMusicNote(_key) {
         const self = this;
         ((key) => {
             const note = document.getElementById(`musicNote_${this.getCurrentNoteIndex()}`);
             // debug.log(`Note      : [${key}] : Assigned to : ${this.currentNoteIndex}`);
             note.innerText = key;
+            this.setNotePosition(note);
+
             // debug.log(`Render Music Note : [${key}]`, note);
 
             note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME} showNote`);
@@ -192,6 +218,7 @@ export default class NoteCreator {
             const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
             // debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
             keypressedNote.innerText = key;
+            this.setNotePosition(keypressedNote);
 
             keypressedNote.setAttribute(`class`, `${this.PRESSED_CLASS_NAME} showNote`);
             this.checkPressedKeyCorrected(key);

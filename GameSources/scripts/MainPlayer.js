@@ -35,9 +35,16 @@ import SFXPlayer from "./SFXPlayer";
         };
         document.onclick = async (e) => {
             console.log(e)
-            const player = await BGMPlayer.setVideo(`두근두근! 드디어!! 대모험 시작!!!`);
-            NoteCreator.start();
-            player.play();
+            const player = BGMPlayer.setVideo(`두근두근! 드디어!! 대모험 시작!!!`, ({
+                status,
+                payload
+            }) => {
+                if (status === `GameReady`) {
+                    NoteCreator.start();
+                    payload.play();
+                } else if (status === `GameCompleted`) {
+                }
+            });
         }
 
     };

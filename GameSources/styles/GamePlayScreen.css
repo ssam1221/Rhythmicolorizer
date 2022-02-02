@@ -75,14 +75,57 @@ div#keynotePressedContainer {
     height: 100%;
 }
 
-div#keynotesContainerBackground,
-div#keynotesContainer {
+div#keynotesContainerBackground {
+    position: absolute;
+    width: 100%;
+    height: 640px;  
+}
+div#keynotesContainer,
+div.keynotesContainer {
     font-size: 128px;
     position: absolute;
     left: 0;
     top: calc(50% - 64px);
     width: 100%;
     height: 160px;
+}
+div#keynotesContainerBackground {
+    top: calc(50% - 320px);
+    height: 640px;
+}
+div#keynotesContainer {
+    top: 0;
+    height: 100%;
+}
+
+div.keynotesContainer {
+    width: 100%;
+    height: 160px;
+    border: 1px solid black;
+    opacity: 0;
+}
+
+div.keynotesContainer#keynotesContainer_0 {
+    position: absolute;
+    top: calc(50% - 320px);
+    /* background-color: red; */
+}
+
+div.keynotesContainer#keynotesContainer_1 {
+    position: absolute;
+    top: calc(50% - 160px);
+}
+
+div.keynotesContainer#keynotesContainer_2 {
+    position: absolute;
+    top: calc(50%);
+
+}
+
+div.keynotesContainer#keynotesContainer_3 {
+    position: absolute;
+    top: calc(50% + 160px);
+
 }
 
 div#keynotesContainerBackground {
@@ -127,10 +170,10 @@ div#keynoteChecker {
     top: 0;
 
     background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0) 20%,
-            white 42%,
-            white 56%,
-            rgba(255, 255, 255, 0) 80%);
+            rgba(255, 255, 255, 0) 3%,
+            white 5%,
+            white 90%,
+            rgba(255, 255, 255, 0) 97%);
     opacity: 0;
 }
 
@@ -166,7 +209,7 @@ div.PRESSED_NOTE.showNote {
 
 div#Difficulty {
     padding: 16px;
-    font-size: 32px;
+    font-size: 24px;
     position: absolute;
     top: 0;
     right: 0;
