@@ -1,5 +1,7 @@
 import Debug from "./Debug";
 import BGMDatabase from "./BGMDatabase";
+import BGMPlayer from "./BGMPlayer";
+import SFXPlayer from "./SFXPlayer";
 
 const debug = new Debug({
     filename: `NoteCreator`
@@ -184,6 +186,8 @@ export default class NoteCreator {
     }
 
     static keypressNote(_key) {
+
+        SFXPlayer.play(`./data/sfx/hat.mp3`);
         ((key) => {
             const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
             // debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
@@ -208,8 +212,11 @@ export default class NoteCreator {
     }
 
     static onkeypress(e) {
-        if (e.key.length === 1) {
-            this.keypressNote(e.key)
+        if (true === BGMPlayer.isGameStart) {
+            if (e.key.length === 1) {
+                this.keypressNote(e.key)
+            }
         }
+
     }
 }

@@ -10,6 +10,7 @@ const debug = new Debug({
 export default class BGMPlayer {
     static currentBGM = ``;
     static isBGMStart = false;
+    static isGameStart = false;
     static player;
 
     static Containers = {
@@ -116,10 +117,11 @@ export default class BGMPlayer {
 
             async function onPlayerStateChange(event) {
                 if (self.isBGMStart === false) {
-                    debug.log(`self.isBGMStart `, self.isBGMStart);
                     self.isBGMStart = true;
                     self.player.stopVideo();
                     await countdown();
+                    debug.log(`self.isBGMStart `, self.isBGMStart);
+                    self.isGameStart = true;
                     // NoteCreator.start();
                     // console.log(`onPlayerStateChange `, event)
                     // if (event.data === YT.PlayerState.PLAYING) {
