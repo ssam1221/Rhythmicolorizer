@@ -1,3 +1,51 @@
+@keyframes NoteScoreAnimation_Perfect {
+    0% {
+        transform: scale(6.0);
+        background-color: green;
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: transparent;
+    }
+}
+
+@keyframes NoteScoreAnimation_Good {
+    0% {
+        transform: scale(6.0);
+        background-color: blue;
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: transparent;
+    }
+}
+
+@keyframes NoteScoreAnimation_Bad {
+    0% {
+        transform: scale(6.0);
+        background-color: red;
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: transparent;
+    }
+}
+
+@keyframes NoteScoreAnimation_Miss {
+    0% {
+        transform: scale(6.0);
+        background-color: transparent;
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: transparent;
+    }
+}
+
 @keyframes NoteShow {
     0% {
         transform: translateX(130vw);
@@ -78,8 +126,9 @@ div#keynotePressedContainer {
 div#keynotesContainerBackground {
     position: absolute;
     width: 100%;
-    height: 640px;  
+    height: 640px;
 }
+
 div#keynotesContainer,
 div.keynotesContainer {
     font-size: 128px;
@@ -89,10 +138,12 @@ div.keynotesContainer {
     width: 100%;
     height: 160px;
 }
+
 div#keynotesContainerBackground {
     top: calc(50% - 320px);
     height: 640px;
 }
+
 div#keynotesContainer {
     top: 0;
     height: 100%;
@@ -116,12 +167,67 @@ div.keynotesContainer#keynotesContainer_1 {
 
 div.keynotesContainer#keynotesContainer_2 {
     top: calc(50%);
-
 }
 
 div.keynotesContainer#keynotesContainer_3 {
     top: calc(50% + 160px);
 }
+
+div#pointDisplay {
+    top: 0;
+    height: 100%;
+}
+
+div.pointDisplay {
+    position: absolute;
+    width: 100%;
+    height: 160px;
+    font-size: 64px;
+    text-align: right;
+    line-height: 160px;
+    margin-right: 50px;
+    right: 0%;
+}
+
+div.pointDisplay.pointDisplay_0 {
+    right: 0%;
+    top: calc(50% - 320px);
+}
+
+div.pointDisplay.pointDisplay_Perfect {
+    color: green;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+div.pointDisplay.pointDisplay_Good {
+    color: blue;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+div.pointDisplay.pointDisplay_Bad {
+    color: red;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+div.pointDisplay.pointDisplay_Miss {
+    color: black;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+div.pointDisplay.pointDisplay_1 {
+    right: 0%;
+    top: calc(50% - 160px);
+}
+
+div.pointDisplay.pointDisplay_2 {
+    right: 0%;
+    top: calc(50%);
+}
+
+div.pointDisplay.pointDisplay_3 {
+    right: 0%;
+    top: calc(50% + 160px);
+}
+
+
+
 
 div#keynotesContainerBackground {
     background: linear-gradient(to right,
@@ -176,16 +282,38 @@ div.keynoteChecker {
     left: 0px;
     width: 60px;
     height: 160px;
+    opacity: 0.7;
 }
+
+div.keynoteChecker.NoteScoreAnimation_Perfect {
+    animation: NoteScoreAnimation_Perfect linear 0.3s;
+}
+
+div.keynoteChecker.NoteScoreAnimation_Good {
+    animation: NoteScoreAnimation_Good linear 0.3s;
+}
+
+div.keynoteChecker.NoteScoreAnimation_Bad {
+    animation: NoteScoreAnimation_Bad linear 0.3s;
+}
+
+div.keynoteChecker.NoteScoreAnimation_Miss {
+    animation: NoteScoreAnimation_Miss linear 0.3s;
+}
+
+
 div.keynoteChecker#keynoteChecker_0 {
     top: calc(50% - 320px);
 }
+
 div.keynoteChecker#keynoteChecker_1 {
     top: calc(50% - 160px);
 }
+
 div.keynoteChecker#keynoteChecker_2 {
     top: calc(50%);
 }
+
 div.keynoteChecker#keynoteChecker_3 {
     top: calc(50% + 160px);
 }
@@ -221,11 +349,22 @@ div.PRESSED_NOTE.showNote {
 }
 
 div#Difficulty {
-    padding: 16px;
+    padding: 8px;
     font-size: 24px;
     position: absolute;
     top: 0;
     right: 0;
     opacity: 0;
     transition-duration: 1s;
+}
+
+div#GameScore {
+    height: 30px;
+    width: 100%;
+    padding: 16px;
+    font-size: 32px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
 }

@@ -12,6 +12,7 @@ const debug = new Debug({
 export default class DOMConatiners {
 
     static Containers = {
+        GameScore: null,
         Difficulty: null,
         GetReadyText: null,
         keynotesContainerBackground: null,
@@ -19,11 +20,13 @@ export default class DOMConatiners {
         keynotesContainerContainer: null,
         keynotesContainers: null,
         keynoteCheckerContainer: null,
-        keynoteCheckers: null
+        keynoteCheckers: null,
+        pointDisplayContainer: null
     }
 
     static initialize() {
         debug.log(`Initialize...`);
+        this.Containers.GameScore = document.getElementById(`GameScore`);
         this.Containers.Difficulty = document.getElementById(`Difficulty`);
         this.Containers.GetReadyText = document.getElementById(`getReadyText`);
         this.Containers.keynotesContainerBackground = document.getElementById(`keynotesContainerBackground`);
@@ -32,6 +35,7 @@ export default class DOMConatiners {
         this.Containers.keynotesContainers = document.getElementsByClassName(`keynotesContainer`);
         this.Containers.keynoteCheckerContainer = document.getElementById(`keynoteChecker`);
         this.Containers.keynoteCheckers = document.getElementsByClassName(`keynoteChecker`);
+        this.Containers.pointDisplayContainer = document.getElementById(`pointDisplay`);
     }
 
 

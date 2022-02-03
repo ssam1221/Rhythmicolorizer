@@ -1,7 +1,10 @@
+// TODO : 노트 생성/판정 및 게임 점수 등 코드 분리
+
 import Debug from "./Debug";
 import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./BGMPlayer";
 import DOMConatiners from "./DOMConatiners"
+import ScoreController from "./ScoreController";
 import SFXPlayer from "./SFXPlayer";
 
 const debug = new Debug({
@@ -18,14 +21,17 @@ export default class NoteCreator {
 
     static currentDifficulty = ``;
 
+    static POINT_MATCHED_CLASS_NAME = `pointDisplay`
     static MUSIC_NOTE_CLASS_NAME = `MUSIC_NOTE`;
     static PRESSED_CLASS_NAME = `PRESSED_NOTE`;
     static MAX_KEYPRESS_NOTES = 100;
     static KEYPRESS_FPS = 1000 / this.MAX_KEYPRESS_NOTES;
     static currentNoteIndex = 0;
     static currentKeyPressNoteIndex = 0;
+    static currentPointMatchedIndex = 0;
 
     static NOTE_SPEED = 2;
+    static NOTE_PRESS_DIFF = 350;
     static NOTE_ACTIVATING_TIMESTAMP = 1300;
     static NOTE_SHOWING_TIMESTAMP = this.NOTE_SPEED * 1000;
     // static NOTE_CHECK_DELAY_TIMESTAMP = 200; // / 2;
@@ -35,7 +41,9 @@ export default class NoteCreator {
     static keypressDivInterval;
 
     static isPaused = false;
+    static currentCheckingNoteIndex = 0;
     static noteList = [];
+    static pointMatchedList = [];
     static musicNoteList = [];
     static keypressNotes = [];
     static timeoutFunctionList = [];
@@ -47,6 +55,7 @@ export default class NoteCreator {
         IDLE: `Idle`,
         SHOWING: `Showing`,
         ACTIVATING: `Activating`,
+        CATCHED: `Catched`,
         USED: `Used`
     }
     static NOTE_SIZE = {
@@ -61,18 +70,16 @@ export default class NoteCreator {
     }
 
     static PointCheck = {
-        Perfect: 0,
-        Good: 0,
-        Bad: 0,
-        Miss: 0
+        Perfect: 50,
+        Good: 100,
+        Bad: 300,
+        Miss: 99999
     }
 
     static initialize() {
         debug.log(`Initializing...`);
         this.createkeypressNotes();
-        // this.keypressDivInterval = setInterval(() => {
-        //     this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
-        // }, this.KEYPRESS_FPS);
+        this.createPointMatchedElements();
     }
 
     static getCurrentNoteIndex() {
@@ -112,6 +119,16 @@ export default class NoteCreator {
         }
     }
 
+    static createPointMatchedElements() {
+        for (let i = 0; i < this.MAX_KEYPRESS_NOTES; i++) {
+            const pointMatchedElements = document.createElement(`div`);
+            pointMatchedElements.id = `pointMatched_${i}`;
+            pointMatchedElements.setAttribute(`class`, this.POINT_MATCHED_CLASS_NAME);
+            this.pointMatchedList.push(pointMatchedElements);
+            DOMConatiners.get().pointDisplayContainer.appendChild(pointMatchedElements);
+        }
+    }
+
     static add({
         what,
         timestamp
@@ -140,7 +157,7 @@ export default class NoteCreator {
         // Temp
         this.setNotes(`두근두근! 드디어!! 대모험 시작!!!`, this.Difficulty.NORMAL);
         // Temp
-
+        ScoreController.initialize(this.noteList);
         for (const _note of this.noteList) {
             ((note) => {
                 // debug.log(`Note show timestamp : ${note.timestamp} - ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
@@ -186,6 +203,13 @@ export default class NoteCreator {
         }
     }
 
+    static getNotePositionByKey(key) {
+        for (const rule in this.NOTE_POSITION) {
+            if (rule.indexOf(key) > -1) {
+                return this.NOTE_POSITION[rule];
+            }
+        }
+    }
     static renderMusicNote(_key) {
         const self = this;
         ((key) => {
@@ -227,11 +251,90 @@ export default class NoteCreator {
         })(_key);
     }
 
-    static checkPressedKeyCorrected(key) {
-        const diff = new Date().getTime() - this.StartTime;
-        debug.log(`Key pressed ${key} with timestamp : ${diff}`);
+    static updateCurrentCheckingNoteIndex(key) {
+        let tmpIdx = this.currentCheckingNoteIndex;
+        const pressedNotePosition = this.getNotePositionByKey(key);
+        debug.log(`updateCurrentCheckingNoteIndex key: ${tmpIdx < this.noteList.length}`)
+        while (true) {
+            if (tmpIdx >= this.noteList.length) {
+                return;
+            }
+            // debug.log(`CHECKING   NOTE : `, this.noteList[tmpIdx]);
+            if (this.noteList[tmpIdx].status === this.NOTE_STATUS.IDLE) {
+                break;
+            }
+            if (this.noteList[tmpIdx].status === this.NOTE_STATUS.ACTIVATING) {
+                const notePosition = this.getNotePositionByKey(this.noteList[tmpIdx].key);
+                // debug.log(`ACTIVATING NOTE : `, this.noteList[tmpIdx] , `with position : ${notePosition}`);
+                // debug.log(`this.currentKeyPressNoteIndex : ${this.currentKeyPressNoteIndex}`);
+                this.currentCheckingNoteIndex = tmpIdx;
+                break;
+            }
+            tmpIdx++;
+        }
+    }
 
-        this.currentKeyPressNoteIndex;
+    static showPointMatchedByPointAndPosition(point, position) {
+        this.MAX_KEYPRESS_NOTES
+        const _pointMatchedEl = this.pointMatchedList[this.currentPointMatchedIndex];
+        ((pointMatchedEl) => {
+            pointMatchedEl.innerText = point;
+            const prevClass = pointMatchedEl.getAttribute(`class`);
+            pointMatchedEl.setAttribute(`class`, `${prevClass} pointDisplay_${point} pointDisplay_${position}`);
+            this.currentPointMatchedIndex = ++this.currentPointMatchedIndex % this.MAX_KEYPRESS_NOTES;
+            console.log(pointMatchedEl)
+            setTimeout(() => {
+                pointMatchedEl.setAttribute(`class`, prevClass);
+                pointMatchedEl.innerText = ``;
+            }, 500);
+        })(_pointMatchedEl);
+    }
+
+    static calculatePoint(noteTimestamp, keypressTimestamp) {
+        const diff = keypressTimestamp - noteTimestamp - this.NOTE_PRESS_DIFF;
+        for (const point in this.PointCheck) {
+            if (Math.abs(diff) < this.PointCheck[point]) {
+                // console.log(`CHECKED ::: ${point}`);
+                return point;
+            }
+        }
+    }
+
+    static setNoteCheckerColorByPoint(key, point) {
+        debug.log(`setNoteCheckerColorByPoint(${key}, ${point})`);
+        const pos = this.getNotePositionByKey(key);
+        const checkerEl = DOMConatiners.Containers.keynoteCheckers[pos];
+        const prevClassOfCheckerEl = checkerEl.getAttribute(`class`);
+        switch (point) {
+            case `Perfect`:
+            case `Good`:
+            case `Bad`:
+            case `Miss`:
+                checkerEl.setAttribute(`class`, `${prevClassOfCheckerEl} NoteScoreAnimation_${point}`);
+                this.showPointMatchedByPointAndPosition(point, pos);
+                break;
+        }
+        setTimeout(() => {
+            checkerEl.setAttribute(`class`, prevClassOfCheckerEl);
+        }, 1000);
+    }
+
+    static checkPressedKeyCorrected(key) {
+        const keypressTimestamp = new Date().getTime() - this.StartTime;
+        // debug.log(`Key pressed ${key} (Position : ${this.getNotePositionByKey(key)}) with timestamp : ${keypressTimestamp}`);
+        this.updateCurrentCheckingNoteIndex(key);
+        if (this.noteList[this.currentCheckingNoteIndex].key === key) {
+            this.noteList[this.currentCheckingNoteIndex].status = this.NOTE_STATUS.CATCHED;
+            const point = this.calculatePoint(this.noteList[this.currentCheckingNoteIndex].timestamp, keypressTimestamp);
+            ScoreController.addScore(point);
+            this.setNoteCheckerColorByPoint(key, point);
+            document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`).style.visibility = `hidden`;
+            setTimeout(() => {
+                document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`).style.visibility = `visible`;
+            }, 1000);
+            // console.log(this.noteList[this.currentCheckingNoteIndex])
+            // console.log(document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`))
+        }
     }
 
     static onkeypress(e) {
