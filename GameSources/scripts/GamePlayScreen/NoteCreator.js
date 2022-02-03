@@ -1,11 +1,11 @@
 // TODO : 노트 생성/판정 및 게임 점수 등 코드 분리
 
-import Debug from "./Debug";
-import BGMDatabase from "./BGMDatabase";
+import BGMDatabase from "../BGMDatabase";
+import Debug from "../Common/Debug";
+import DOMConatiners from "../Common/DOMConatiners"
 import BGMPlayer from "./BGMPlayer";
-import DOMConatiners from "./DOMConatiners"
 import ScoreController from "./ScoreController";
-import SFXPlayer from "./SFXPlayer";
+import SFXPlayer from "../Common/SFXPlayer";
 
 const debug = new Debug({
     filename: `NoteCreator`

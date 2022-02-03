@@ -1,4 +1,4 @@
-import Debug from "./Debug";
+import Debug from "./Common/Debug";
 
 const debug = new Debug({
     filename: `BGMDatabase`

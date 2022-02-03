@@ -1,3 +1,6 @@
+import BGMPlayer from "./GamePlayScreen/BGMPlayer";
+import NoteCreator from "./GamePlayScreen/NoteCreator";
+
 export default class GamePlayScreenController {
 
     static startGameByTitle(title) {

@@ -1,9 +1,9 @@
 import BGMSelector from "../BGMSelector";
 import BGMDatabase from "../BGMDatabase";
-import DOMConatiners from "../DOMConatiners"
+import DOMConatiners from "../Common/DOMConatiners"
 import NoteCreator from "./NoteCreator";
-import SFXPlayer from "../SFXPlayer";
-import Debug from "../Debug";
+import SFXPlayer from "../Common/SFXPlayer";
+import Debug from "../Common/Debug";
 
 const debug = new Debug({
     filename: `BGMPlayer`

@@ -1,4 +1,4 @@
-import Debug from "./Debug";
+import Debug from "./Common/Debug";
 import BGMDatabase from "./BGMDatabase";
 
 const debug = new Debug({

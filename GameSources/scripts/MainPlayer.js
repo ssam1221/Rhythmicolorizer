@@ -1,11 +1,13 @@
-import Debug from "./Debug";
+import Debug from "./Common/Debug";
 import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./GamePlayScreen/BGMPlayer";
 import BGMSelector from "./BGMSelector";
-import DOMConatiners from "./DOMConatiners"
-import KeyboardEventListener from "./KeyboardEventListener";
+import DOMConatiners from "./Common/DOMConatiners"
+import KeyboardEventListener from "./Common/KeyboardEventListener";
 import NoteCreator from "./GamePlayScreen/NoteCreator";
-import SFXPlayer from "./SFXPlayer";
+import SFXPlayer from "./Common/SFXPlayer";
+
+import GamePlayScreenController from "./GamePlayScreenController"
 // import LoadingController from "./LoadingController";
 (() => {
     window.onload = async () => {
