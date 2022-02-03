@@ -12,6 +12,7 @@ const debug = new Debug({
 export default class DOMConatiners {
 
     static Containers = {
+        ComboCount: null,
         GameScore: null,
         Difficulty: null,
         GetReadyText: null,
@@ -26,6 +27,7 @@ export default class DOMConatiners {
 
     static initialize() {
         debug.log(`Initialize...`);
+        this.Containers.ComboCount = document.getElementById(`ComboCount`);
         this.Containers.GameScore = document.getElementById(`GameScore`);
         this.Containers.Difficulty = document.getElementById(`Difficulty`);
         this.Containers.GetReadyText = document.getElementById(`getReadyText`);

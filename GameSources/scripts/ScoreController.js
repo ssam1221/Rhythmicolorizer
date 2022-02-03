@@ -15,6 +15,8 @@ export default class ScoreController {
         Miss: 0
     }
 
+    static ComboCount = 0;
+
     static PERFECT_SCORE = 1000000;
     static scorePerNote;
     static scoreSum = 0;
@@ -33,5 +35,18 @@ export default class ScoreController {
         this.scoreSum += this.scorePerNote * this.SCORE_OF_POINT[point];
         debug.log(`Update Score :: ${this.getFormattedScore()}`)
         DOMConatiners.get().GameScore.innerText = this.getFormattedScore();
+        if ((point === `Perfect`) || (point === `Good`)) {
+            this.ComboCount++;
+        } else {
+            this.ComboCount = 0;
+            DOMConatiners.get().ComboCount.innerText = ``
+        }
+        if (this.ComboCount > 1) {
+            DOMConatiners.get().ComboCount.setAttribute(`class`, `ComboCountAnimation`);
+            DOMConatiners.get().ComboCount.innerHTML = `${this.ComboCount}<br>Combo`
+            setTimeout(() => {
+                DOMConatiners.get().ComboCount.setAttribute(`class`, ``);
+            }, 100);
+        }
     }
 }
