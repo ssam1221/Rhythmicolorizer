@@ -99,6 +99,7 @@ div#keynotesContainer {
 }
 
 div.keynotesContainer {
+    position: absolute;
     width: 100%;
     height: 160px;
     border: 1px solid black;
@@ -106,26 +107,20 @@ div.keynotesContainer {
 }
 
 div.keynotesContainer#keynotesContainer_0 {
-    position: absolute;
     top: calc(50% - 320px);
-    /* background-color: red; */
 }
 
 div.keynotesContainer#keynotesContainer_1 {
-    position: absolute;
     top: calc(50% - 160px);
 }
 
 div.keynotesContainer#keynotesContainer_2 {
-    position: absolute;
     top: calc(50%);
 
 }
 
 div.keynotesContainer#keynotesContainer_3 {
-    position: absolute;
     top: calc(50% + 160px);
-
 }
 
 div#keynotesContainerBackground {
@@ -136,7 +131,6 @@ div#keynotesContainerBackground {
             rgba(255, 255, 255, 0) 80%);
     opacity: 0;
 }
-
 
 #youtubeVideoPlayer {
     width: 800px;
@@ -175,6 +169,25 @@ div#keynoteChecker {
             white 90%,
             rgba(255, 255, 255, 0) 97%);
     opacity: 0;
+}
+
+div.keynoteChecker {
+    position: absolute;
+    left: 0px;
+    width: 60px;
+    height: 160px;
+}
+div.keynoteChecker#keynoteChecker_0 {
+    top: calc(50% - 320px);
+}
+div.keynoteChecker#keynoteChecker_1 {
+    top: calc(50% - 160px);
+}
+div.keynoteChecker#keynoteChecker_2 {
+    top: calc(50%);
+}
+div.keynoteChecker#keynoteChecker_3 {
+    top: calc(50% + 160px);
 }
 
 div.MUSIC_NOTE {

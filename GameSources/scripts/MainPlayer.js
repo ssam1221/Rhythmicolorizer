@@ -2,6 +2,7 @@ import Debug from "./Debug";
 import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./BGMPlayer";
 import BGMSelector from "./BGMSelector";
+import DOMConatiners from "./DOMConatiners"
 import KeyboardEventListener from "./KeyboardEventListener";
 import NoteCreator from "./NoteCreator";
 import SFXPlayer from "./SFXPlayer";
@@ -13,6 +14,7 @@ import SFXPlayer from "./SFXPlayer";
             filename: `MainPlayer`
         });
         debug.log(`Start`);
+        DOMConatiners.initialize();
         SFXPlayer.initialize();
         await BGMDatabase.initialize();
         await BGMSelector.initialize();

@@ -1,6 +1,7 @@
 import Debug from "./Debug";
 import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./BGMPlayer";
+import DOMConatiners from "./DOMConatiners"
 import SFXPlayer from "./SFXPlayer";
 
 const debug = new Debug({
@@ -41,9 +42,6 @@ export default class NoteCreator {
 
     static activateNoteList = [];
 
-    static keynotesContainer = null;
-    static pressedkeynotesContainer = null;
-
     static StartTime = null;
     static NOTE_STATUS = {
         IDLE: `Idle`,
@@ -71,8 +69,6 @@ export default class NoteCreator {
 
     static initialize() {
         debug.log(`Initializing...`);
-        this.keynotesContainer = document.getElementById(`keynotesContainer`);
-        this.pressedkeynotesContainer = document.getElementById(`keynotePressedContainer`);
         this.createkeypressNotes();
         // this.keypressDivInterval = setInterval(() => {
         //     this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
@@ -107,12 +103,12 @@ export default class NoteCreator {
             const musicNoteDiv = document.createElement(`div`);
             musicNoteDiv.id = `musicNote_${i}`;
             musicNoteDiv.setAttribute(`class`, this.MUSIC_NOTE_CLASS_NAME);
-            this.keynotesContainer.appendChild(musicNoteDiv);
+            DOMConatiners.get().keynotesContainerContainer.appendChild(musicNoteDiv);
 
             const pressedNotediv = document.createElement(`div`);
             pressedNotediv.id = `keypressNote_${i}`;
             pressedNotediv.setAttribute(`class`, this.PRESSED_CLASS_NAME);
-            this.pressedkeynotesContainer.appendChild(pressedNotediv);
+            DOMConatiners.get().pressedkeynotesContainer.appendChild(pressedNotediv);
         }
     }
 
