@@ -1,10 +1,10 @@
 import Debug from "./Debug";
 import BGMDatabase from "./BGMDatabase";
-import BGMPlayer from "./BGMPlayer";
+import BGMPlayer from "./GamePlayScreen/BGMPlayer";
 import BGMSelector from "./BGMSelector";
 import DOMConatiners from "./DOMConatiners"
 import KeyboardEventListener from "./KeyboardEventListener";
-import NoteCreator from "./NoteCreator";
+import NoteCreator from "./GamePlayScreen/NoteCreator";
 import SFXPlayer from "./SFXPlayer";
 // import LoadingController from "./LoadingController";
 (() => {
@@ -36,17 +36,7 @@ import SFXPlayer from "./SFXPlayer";
             event.preventDefault();
         };
         document.onclick = async (e) => {
-            console.log(e)
-            const player = BGMPlayer.setVideo(`두근두근! 드디어!! 대모험 시작!!!`, ({
-                status,
-                payload
-            }) => {
-                if (status === `GameReady`) {
-                    NoteCreator.start();
-                    payload.play();
-                } else if (status === `GameCompleted`) {
-                }
-            });
+            GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`);
         }
 
     };

@@ -1,9 +1,9 @@
-import BGMSelector from "./BGMSelector";
-import BGMDatabase from "./BGMDatabase";
-import DOMConatiners from "./DOMConatiners"
+import BGMSelector from "../BGMSelector";
+import BGMDatabase from "../BGMDatabase";
+import DOMConatiners from "../DOMConatiners"
 import NoteCreator from "./NoteCreator";
-import SFXPlayer from "./SFXPlayer";
-import Debug from "./Debug";
+import SFXPlayer from "../SFXPlayer";
+import Debug from "../Debug";
 
 const debug = new Debug({
     filename: `BGMPlayer`
@@ -15,7 +15,11 @@ export default class BGMPlayer {
     static isGameStart = false;
     static player;
 
-    static initialize() {
+    static initialize() {}
+
+    static getBGMDuration() {
+        // Seconds
+        return self.player.getDuration();
     }
 
     // Refer : https://developers.google.com/youtube/iframe_api_reference?hl=ko#loadVideoById
@@ -44,7 +48,6 @@ export default class BGMPlayer {
                 onStateChange: onPlayerStateChange
             }
         });
-
 
         // 4. The API will call this function when the video player is ready.
         function onPlayerReady(event) {
@@ -136,7 +139,7 @@ export default class BGMPlayer {
                 // console.log(`onPlayerStateChange `, event)
                 // if (event.data === YT.PlayerState.PLAYING) {
                 // setTimeout(stopVideo, 6000);
-                console.log(YT.PlayerState)
+                // console.log(YT.PlayerState)
                 callback({
                     status: `GameReady`,
                     payload: {

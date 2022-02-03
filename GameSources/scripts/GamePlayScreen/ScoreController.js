@@ -1,5 +1,5 @@
-import Debug from "./Debug";
-import DOMConatiners from "./DOMConatiners"
+import Debug from "../Common/Debug";
+import DOMConatiners from "../DOMConatiners"
 
 const debug = new Debug({
     filename: `ScoreController`
