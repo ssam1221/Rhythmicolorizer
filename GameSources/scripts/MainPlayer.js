@@ -38,7 +38,7 @@ import GamePlayScreenController from "./GamePlayScreenController"
             event.preventDefault();
         };
         document.onclick = async (e) => {
-            GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`);
+            GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
         }
 
     };

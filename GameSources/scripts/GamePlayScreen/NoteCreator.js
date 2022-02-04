@@ -69,6 +69,13 @@ export default class NoteCreator {
         'zxcvbnm,./ZXCVBNM<>?': 3,
     }
 
+    static SHIFT_USED_NOTE = [
+        '~!@#$%^&*()_+|',
+        'QWERTYUIOP{}',
+        'ASDFGHJKL:"',
+        'ZXCVBNM<>?'
+    ]
+
     static PointCheck = {
         Perfect: 50,
         Good: 100,
@@ -150,12 +157,12 @@ export default class NoteCreator {
         const timestamp = this.StartTime.getTime() - new Date().getTime();
     }
 
-    static async start() {
+    static async start(title, difficulty) {
         const self = this;
         debug.log(`Start to create notes...`);
         debug.log(`Note create delay : ${self.NOTE_CHECK_DELAY_TIMESTAMP}`);
         // Temp
-        this.setNotes(`두근두근! 드디어!! 대모험 시작!!!`, this.Difficulty.NORMAL);
+        this.setNotes(title, difficulty);
         // Temp
         ScoreController.initialize(this.noteList);
         for (const _note of this.noteList) {
@@ -191,6 +198,15 @@ export default class NoteCreator {
         }
     }
 
+    static isShiftedUsedKey(key) {
+        for (const rule in this.NOTE_POSITION) {
+            if (this.SHIFT_USED_NOTE[this.NOTE_POSITION[rule]].indexOf(key) !== -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     static setNotePosition(note) {
         const key = note.innerText;
         for (const rule in this.NOTE_POSITION) {
@@ -219,9 +235,13 @@ export default class NoteCreator {
             this.setNotePosition(note);
 
             // debug.log(`Render Music Note : [${key}]`, note);
+            let classAttributes = `showNote`;
+            if (true === this.isShiftedUsedKey(key)) {
+                classAttributes += ` shiftedKey`
+            }
 
-            note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME} showNote`);
-
+            note.setAttribute(`class`, `${this.MUSIC_NOTE_CLASS_NAME} ${classAttributes}`);
+            console.log(note)
             setTimeout(() => {
                 // keypressedNote.setAttribute(`class`, `hideNote`);
                 // debug.log(`Render Music Note : [${key}]`, note);

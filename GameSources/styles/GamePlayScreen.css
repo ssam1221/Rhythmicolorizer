@@ -226,6 +226,11 @@ div.MUSIC_NOTE.showNote {
     animation: NoteShow linear 2s;
 }
 
+div.MUSIC_NOTE.showNote.shiftedKey {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: white;
+}
+
 div.PRESSED_NOTE {
     position: absolute;
     /* left: calc(20% - 32px); */
