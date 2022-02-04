@@ -31,11 +31,11 @@ export default class NoteCreator {
     static currentPointMatchedIndex = 0;
 
     static NOTE_SPEED = 2;
-    static NOTE_PRESS_DIFF = 350;
+    static NOTE_PRESS_DIFF = 0;
     static NOTE_ACTIVATING_TIMESTAMP = 1300;
     static NOTE_SHOWING_TIMESTAMP = this.NOTE_SPEED * 1000;
     // static NOTE_CHECK_DELAY_TIMESTAMP = 200; // / 2;
-    static NOTE_CHECK_DELAY_TIMESTAMP = 1200;
+    static NOTE_CHECK_DELAY_TIMESTAMP = 1500;
     // static NOTE_CHECK_DELAY_TIMESTAMP = parseInt(this.NOTE_SHOWING_TIMESTAMP + (370 / this.NOTE_SPEED)); // / 2;
 
     static keypressDivInterval;
@@ -291,6 +291,7 @@ export default class NoteCreator {
     }
 
     static calculatePoint(noteTimestamp, keypressTimestamp) {
+        debug.log(`calculatePoint : ${keypressTimestamp} - ${noteTimestamp}`);
         const diff = keypressTimestamp - noteTimestamp - this.NOTE_PRESS_DIFF;
         for (const point in this.PointCheck) {
             if (Math.abs(diff) < this.PointCheck[point]) {

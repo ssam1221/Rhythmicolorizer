@@ -4,7 +4,7 @@ import NoteCreator from "./GamePlayScreen/NoteCreator";
 export default class GamePlayScreenController {
 
     static startGameByTitle(title) {
-        const player = BGMPlayer.setVideo(title, ({
+        BGMPlayer.setVideo(title, ({
             status,
             payload
         }) => {
