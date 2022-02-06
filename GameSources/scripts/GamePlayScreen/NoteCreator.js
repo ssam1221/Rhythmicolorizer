@@ -56,7 +56,7 @@ export default class NoteCreator {
         SHOWING: `Showing`,
         ACTIVATING: `Activating`,
         CATCHED: `Catched`,
-        USED: `Used`
+        MISSED: `Missed`
     }
     static NOTE_SIZE = {
         HEIGHT: `128px`
@@ -182,7 +182,12 @@ export default class NoteCreator {
 
                         setTimeout(() => {
                             // debug.log(`Used note : ${note.key}`);
-                            note.status = self.NOTE_STATUS.USED;
+                            if (note.status === self.NOTE_STATUS.ACTIVATING) {
+                                const MISS = `Miss`;
+                                note.status = self.NOTE_STATUS.MISSED;
+                                self.showPointMatchedByPointAndPosition(MISS, self.getNotePositionByKey(note.key));
+                                ScoreController.addScore(MISS);
+                            }
                         }, self.NOTE_SHOWING_TIMESTAMP);
                     }, note.timestamp - self.NOTE_CHECK_DELAY_TIMESTAMP)
                 )
