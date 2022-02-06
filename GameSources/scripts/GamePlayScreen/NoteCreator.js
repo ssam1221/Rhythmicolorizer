@@ -354,12 +354,13 @@ export default class NoteCreator {
             const point = this.calculatePoint(this.noteList[this.currentCheckingNoteIndex].timestamp, keypressTimestamp);
             ScoreController.addScore(point);
             this.setNoteCheckerColorByPoint(key, point);
-            document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`).style.visibility = `hidden`;
+            debug.log(`Check currentCheckingNoteIndex : `, this.currentCheckingNoteIndex)
+            document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `hidden`;
             setTimeout(() => {
-                document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`).style.visibility = `visible`;
+                document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `visible`;
             }, 1000);
             // console.log(this.noteList[this.currentCheckingNoteIndex])
-            // console.log(document.getElementById(`musicNote_${this.currentCheckingNoteIndex}`))
+            // console.log(document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`))
         }
     }
 
