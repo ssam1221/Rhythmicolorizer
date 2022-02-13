@@ -30,6 +30,10 @@ export default class BGMDatabase {
         }
     }
 
+    static getAllData() {
+        return this.BGMDataList;
+    }
+
     static getCoverImage(title) {
         return `data/coverImages/${title}.png`;
     }

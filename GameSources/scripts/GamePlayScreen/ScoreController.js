@@ -24,7 +24,7 @@ export default class ScoreController {
     static initialize(noteList) {
         this.scoreSum = 0;
         this.scorePerNote = this.PERFECT_SCORE / noteList.length;
-        DOMConatiners.get().GameScore.innerText = this.getFormattedScore();
+        DOMConatiners.get().GamePlayScreenContainer.GameScore.innerText = this.getFormattedScore();
     }
 
     static getFormattedScore() {
@@ -34,18 +34,18 @@ export default class ScoreController {
     static addScore(point) {
         this.scoreSum += this.scorePerNote * this.SCORE_OF_POINT[point];
         debug.log(`Update Score :: ${this.getFormattedScore()}`)
-        DOMConatiners.get().GameScore.innerText = this.getFormattedScore();
+        DOMConatiners.get().GamePlayScreenContainer.GameScore.innerText = this.getFormattedScore();
         if ((point === `Perfect`) || (point === `Good`)) {
             this.ComboCount++;
         } else {
             this.ComboCount = 0;
-            DOMConatiners.get().ComboCount.innerText = ``
+            DOMConatiners.get().GamePlayScreenContainer.ComboCount.innerText = ``
         }
         if (this.ComboCount > 1) {
-            DOMConatiners.get().ComboCount.setAttribute(`class`, `ComboCountAnimation`);
-            DOMConatiners.get().ComboCount.innerHTML = `${this.ComboCount}<br>Combo`
+            DOMConatiners.get().GamePlayScreenContainer.ComboCount.setAttribute(`class`, `ComboCountAnimation`);
+            DOMConatiners.get().GamePlayScreenContainer.ComboCount.innerHTML = `${this.ComboCount}<br>Combo`
             setTimeout(() => {
-                DOMConatiners.get().ComboCount.setAttribute(`class`, ``);
+                DOMConatiners.get().GamePlayScreenContainer.ComboCount.setAttribute(`class`, ``);
             }, 100);
         }
     }

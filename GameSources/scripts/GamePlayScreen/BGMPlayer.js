@@ -1,4 +1,3 @@
-import BGMSelector from "../BGMSelector";
 import BGMDatabase from "../BGMDatabase";
 import DOMConatiners from "../Common/DOMConatiners"
 import NoteCreator from "./NoteCreator";
@@ -61,60 +60,60 @@ export default class BGMPlayer {
 
         function countdown() {
             return new Promise((resolve, reject) => {
-                DOMConatiners.get().GetReadyText.innerHTML = `Get<br>Ready?`;
+                DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `Get<br>Ready?`;
                 SFXPlayer.play(`data/sfx/voice/get_ready.wav`);
-                DOMConatiners.get().GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
+                DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                 setTimeout(() => {
-                    DOMConatiners.get().GetReadyText.setAttribute(`class`, ``);
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
                     SFXPlayer.play(`data/sfx/voice/three.wav`);
-                    DOMConatiners.get().GetReadyText.innerHTML = `3`;
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `3`;
                     setTimeout(() => {
-                        DOMConatiners.get().GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
+                        DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                     });
                 }, 1000);
                 setTimeout(() => {
-                    DOMConatiners.get().GetReadyText.setAttribute(`class`, ``);
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
                     SFXPlayer.play(`data/sfx/voice/two.wav`);
-                    DOMConatiners.get().GetReadyText.innerHTML = `2`;
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `2`;
                     setTimeout(() => {
-                        DOMConatiners.get().GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
+                        DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                     });
                 }, 2000);
                 setTimeout(() => {
-                    DOMConatiners.get().GetReadyText.setAttribute(`class`, ``);
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
                     SFXPlayer.play(`data/sfx/voice/one.wav`);
-                    DOMConatiners.get().GetReadyText.innerHTML = `1`;
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `1`;
                     setTimeout(() => {
-                        DOMConatiners.get().GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
+                        DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                     });
                 }, 3000);
                 setTimeout(() => {
-                    DOMConatiners.get().GetReadyText.setAttribute(`class`, ``);
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
                     SFXPlayer.play(`data/sfx/voice/start.wav`);
-                    DOMConatiners.get().GetReadyText.innerHTML = `Start!`;
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `Start!`;
                     setTimeout(() => {
-                        DOMConatiners.get().GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
+                        DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                     });
                 }, 4000);
                 setTimeout(() => {
-                    const prevClassOfkeynotesContainerBackground = DOMConatiners.get().keynotesContainerBackground.getAttribute(`class`),
-                        prevClassOfkeynoteChecker = DOMConatiners.get().keynoteCheckerContainer.getAttribute(`class`),
-                        prevClassOfkeynotesContainers = DOMConatiners.get().keynotesContainers[0].getAttribute(`class`);
-                    DOMConatiners.get().keynoteCheckerContainer.setAttribute(`class`, `${prevClassOfkeynoteChecker} transparentFadeIn`);
-                    DOMConatiners.get().Difficulty.style.opacity = 1;
-                    DOMConatiners.get().keynotesContainerBackground.setAttribute(`class`, `${prevClassOfkeynotesContainerBackground} transparentFadeIn`);
-                    for (const el of DOMConatiners.get().keynotesContainers) {
+                    const prevClassOfkeynotesContainerBackground = DOMConatiners.get().GamePlayScreenContainer.keynotesContainerBackground.getAttribute(`class`),
+                        prevClassOfkeynoteChecker = DOMConatiners.get().GamePlayScreenContainer.keynoteCheckerContainer.getAttribute(`class`),
+                        prevClassOfkeynotesContainers = DOMConatiners.get().GamePlayScreenContainer.keynotesContainers[0].getAttribute(`class`);
+                    DOMConatiners.get().GamePlayScreenContainer.keynoteCheckerContainer.setAttribute(`class`, `${prevClassOfkeynoteChecker} transparentFadeIn`);
+                    DOMConatiners.get().GamePlayScreenContainer.Difficulty.style.opacity = 1;
+                    DOMConatiners.get().GamePlayScreenContainer.keynotesContainerBackground.setAttribute(`class`, `${prevClassOfkeynotesContainerBackground} transparentFadeIn`);
+                    for (const el of DOMConatiners.get().GamePlayScreenContainer.keynotesContainers) {
                         el.setAttribute(`class`, `${prevClassOfkeynotesContainers} transparentFadeIn`);
                     }
                     setTimeout(() => {
-                        DOMConatiners.get().keynotesContainerBackground.style.opacity = 0.2;
-                        DOMConatiners.get().keynoteCheckerContainer.style.opacity = 0.2;
-                        for (const el of DOMConatiners.get().keynotesContainers) {
+                        DOMConatiners.get().GamePlayScreenContainer.keynotesContainerBackground.style.opacity = 0.2;
+                        DOMConatiners.get().GamePlayScreenContainer.keynoteCheckerContainer.style.opacity = 0.2;
+                        for (const el of DOMConatiners.get().GamePlayScreenContainer.keynotesContainers) {
                             el.style.opacity = 0.2;
                         }
                     })
-                    DOMConatiners.get().GetReadyText.setAttribute(`class`, ``);
-                    DOMConatiners.get().GetReadyText.innerHTML = ``;
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
+                    DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = ``;
                     resolve();
                 }, 5000);
                 // }, 2000);

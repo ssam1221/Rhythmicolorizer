@@ -1,7 +1,7 @@
 import Debug from "./Common/Debug";
 import BGMDatabase from "./BGMDatabase";
 import BGMPlayer from "./GamePlayScreen/BGMPlayer";
-import BGMSelector from "./BGMSelector";
+import BGMSelector from "./SelectBGMScreen/BGMSelector";
 import DOMConatiners from "./Common/DOMConatiners"
 import KeyboardEventListener from "./Common/KeyboardEventListener";
 import NoteCreator from "./GamePlayScreen/NoteCreator";
@@ -20,26 +20,30 @@ import GamePlayScreenController from "./GamePlayScreenController"
         SFXPlayer.initialize();
         await BGMDatabase.initialize();
         await BGMSelector.initialize();
-        await BGMPlayer.initialize();
-        NoteCreator.initialize();
+        // await BGMPlayer.initialize();
+        // NoteCreator.initialize();
         // document.getElementById("test").src = BGMPlayer.getCoverImage("Night Beach Memories");
 
 
-        debug.log(BGMSelector.getBGMListInfo());
+        // debug.log(BGMSelector.getBGMListInfo());
 
-        KeyboardEventListener.setCurrentMode("GamePlaying");
+        KeyboardEventListener.setCurrentMode("SelectBGM");
         // KeyboardEventListener.setCurrentMode("SelectBGM");
         KeyboardEventListener.addKeyboardEventListener();
 
-        // Test
         // const bgmReady = awiat BGMPlayer
         document.oncontextmenu = (event) => {
             debug.log(`Right click`);
             event.preventDefault();
         };
-        document.onclick = async (e) => {
-            GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
-        }
+
+        BGMSelector.show();
+
+
+        // Game Play Test
+        // document.onclick = async (e) => {
+        //     GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
+        // }
 
     };
 })();

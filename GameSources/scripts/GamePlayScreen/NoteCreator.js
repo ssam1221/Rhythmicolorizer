@@ -17,6 +17,7 @@ export default class NoteCreator {
         EASY: `Easy`,
         NORMAL: `Normal`,
         HARD: `Hard`,
+        XTREME: `Xtreme`,
     }
 
     static currentDifficulty = ``;
@@ -24,8 +25,8 @@ export default class NoteCreator {
     static POINT_MATCHED_CLASS_NAME = `pointDisplay`
     static MUSIC_NOTE_CLASS_NAME = `MUSIC_NOTE`;
     static PRESSED_CLASS_NAME = `PRESSED_NOTE`;
-    static MAX_KEYPRESS_NOTES = 100;
-    static KEYPRESS_FPS = 1000 / this.MAX_KEYPRESS_NOTES;
+    static MAX_NUM_OF_NOTES = 200;
+    static KEYPRESS_FPS = 1000 / this.MAX_NUM_OF_NOTES;
     static currentNoteIndex = 0;
     static currentKeyPressNoteIndex = 0;
     static currentPointMatchedIndex = 0;
@@ -90,11 +91,11 @@ export default class NoteCreator {
     }
 
     static getCurrentNoteIndex() {
-        this.currentNoteIndex = (++this.currentNoteIndex) % this.MAX_KEYPRESS_NOTES;
+        this.currentNoteIndex = (++this.currentNoteIndex) % this.MAX_NUM_OF_NOTES;
         return this.currentNoteIndex;
     }
     static getCurrentKeyPressNoteIndex() {
-        this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_KEYPRESS_NOTES;
+        this.currentKeyPressNoteIndex = (++this.currentKeyPressNoteIndex) % this.MAX_NUM_OF_NOTES;
         return this.currentKeyPressNoteIndex;
     }
     static getCurrentDifficulty() {
@@ -113,26 +114,26 @@ export default class NoteCreator {
     }
 
     static createkeypressNotes() {
-        for (let i = 0; i < this.MAX_KEYPRESS_NOTES; i++) {
+        for (let i = 0; i < this.MAX_NUM_OF_NOTES; i++) {
             const musicNoteDiv = document.createElement(`div`);
             musicNoteDiv.id = `musicNote_${i}`;
             musicNoteDiv.setAttribute(`class`, this.MUSIC_NOTE_CLASS_NAME);
-            DOMConatiners.get().keynotesContainerContainer.appendChild(musicNoteDiv);
+            DOMConatiners.get().GamePlayScreenContainer.keynotesContainerContainer.appendChild(musicNoteDiv);
 
             const pressedNotediv = document.createElement(`div`);
             pressedNotediv.id = `keypressNote_${i}`;
             pressedNotediv.setAttribute(`class`, this.PRESSED_CLASS_NAME);
-            DOMConatiners.get().pressedkeynotesContainer.appendChild(pressedNotediv);
+            DOMConatiners.get().GamePlayScreenContainer.pressedkeynotesContainer.appendChild(pressedNotediv);
         }
     }
 
     static createPointMatchedElements() {
-        for (let i = 0; i < this.MAX_KEYPRESS_NOTES; i++) {
+        for (let i = 0; i < this.MAX_NUM_OF_NOTES; i++) {
             const pointMatchedElements = document.createElement(`div`);
             pointMatchedElements.id = `pointMatched_${i}`;
             pointMatchedElements.setAttribute(`class`, this.POINT_MATCHED_CLASS_NAME);
             this.pointMatchedList.push(pointMatchedElements);
-            DOMConatiners.get().pointDisplayContainer.appendChild(pointMatchedElements);
+            DOMConatiners.get().GamePlayScreenContainer.pointDisplayContainer.appendChild(pointMatchedElements);
         }
     }
 
@@ -300,13 +301,12 @@ export default class NoteCreator {
     }
 
     static showPointMatchedByPointAndPosition(point, position) {
-        this.MAX_KEYPRESS_NOTES
         const _pointMatchedEl = this.pointMatchedList[this.currentPointMatchedIndex];
         ((pointMatchedEl) => {
             pointMatchedEl.innerText = point;
             const prevClass = pointMatchedEl.getAttribute(`class`);
             pointMatchedEl.setAttribute(`class`, `${prevClass} pointDisplay_${point} pointDisplay_${position}`);
-            this.currentPointMatchedIndex = ++this.currentPointMatchedIndex % this.MAX_KEYPRESS_NOTES;
+            this.currentPointMatchedIndex = ++this.currentPointMatchedIndex % this.MAX_NUM_OF_NOTES;
             console.log(pointMatchedEl)
             setTimeout(() => {
                 pointMatchedEl.setAttribute(`class`, prevClass);
@@ -329,7 +329,7 @@ export default class NoteCreator {
     static setNoteCheckerColorByPoint(key, point) {
         debug.log(`setNoteCheckerColorByPoint(${key}, ${point})`);
         const pos = this.getNotePositionByKey(key);
-        const checkerEl = DOMConatiners.Containers.keynoteCheckers[pos];
+        const checkerEl = DOMConatiners.Containers.GamePlayScreenContainer.keynoteCheckers[pos];
         const prevClassOfCheckerEl = checkerEl.getAttribute(`class`);
         switch (point) {
             case `Perfect`:
