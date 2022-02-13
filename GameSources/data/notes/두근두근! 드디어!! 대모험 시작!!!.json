@@ -1,5 +1,5 @@
 {
-    "Easy": [
+    "EASY": [
         {
             "key": "a",
             "timestamp": 5100
@@ -37,7 +37,7 @@
             "timestamp": 23100
         }
     ],
-    "Normal": [
+    "NORMAL": [
         {
             "key": "g",
             "timestamp": 1800
@@ -195,7 +195,7 @@
             "timestamp": 70501
         }
     ],
-    "Hard": [
+    "HARD": [
         {
             "key": "M",
             "timestamp": 1800

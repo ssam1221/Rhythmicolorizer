@@ -17,7 +17,7 @@ export default class KeyboardEventListener {
 
                     break;
                 case `SelectMusicScreen`:
-                    BGMSelector.onBGMSelected(e);
+                    BGMSelector.onBGMSelectorKeyPressed(e);
                     break;
                 case `GamePlayScreen`:
                     NoteCreator.onkeypress(e);

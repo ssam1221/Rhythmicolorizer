@@ -21,11 +21,24 @@ export default class BGMSelector {
         `EASY`, `NORMAL`, `HARD`, `XTREME`
     ]
 
+    static BGMPreviewPlayerFade = `out`;
+
+    static BGM_PREVIEW_FADE_DIFF = 0.05;
+    static BGM_PREVIEW_FADEOUT_TIMEOUT_START_TIMESTAMP = 3500;
+
+    static BGM_PREVIEW_FADE_INTERVAL_HANDLER = {
+        IN: 0,
+        OUT: 0
+    }
+    static BGM_PREVIEW_FADEOUT_TIMEOUT_HANDLER = 0;
+
     static selectedDifficultyIdx = 1;
     static currrentDifficulty = ``;
 
-    static selectedMusicIdx = 0;
-    static BGMData = {};
+    static BGMData = null;
+    static selectedMusicIdx;
+    static selectedMusicRotationIdx;
+
 
     static BGM_COVERIMAGE_ROTATE_DEGREE;
 
@@ -35,14 +48,18 @@ export default class BGMSelector {
     static async initialize() {
         debug.log(`Initializing...`);
 
-        this.BGM_COVERIMAGE_ROTATE_DEGREE = 360 / BGMDatabase.getAllData().length;
+        this.BGMData = BGMDatabase.getAllData();
+        this.selectedMusicIdx = parseInt(Math.random() * this.BGMData.length);
+        this.selectedMusicRotationIdx = this.selectedMusicIdx;
+        debug.log(`selectedMusicIdx : `, this.selectedMusicIdx);
+        this.BGM_COVERIMAGE_ROTATE_DEGREE = 360 / this.BGMData.length;
 
         this.currrentDifficulty = this.DIFFICULTY[this.selectedDifficultyIdx];
         debug.log(`Music Info Rotate degree : ${this.BGM_COVERIMAGE_ROTATE_DEGREE}`);
 
-        for (let idx = 0; idx < BGMDatabase.getAllData().length; idx++) {
+        for (let idx = 0; idx < this.BGMData.length; idx++) {
             const rotatedDegree = idx * this.BGM_COVERIMAGE_ROTATE_DEGREE.toFixed(0);
-            const bgmInfo = BGMDatabase.getAllData()[idx];
+            const bgmInfo = this.BGMData[idx];
             const title = bgmInfo.title;
             const coverImage = bgmInfo.coverImage;
             const span = document.createElement(`span`);
@@ -59,23 +76,25 @@ export default class BGMSelector {
 
             DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.appendChild(span);
         }
+
         this.setTitleAndDifficultyText();
+        this.onBGMSelectChanged();
+        // this.playBGMPreview(this.BGMData[0].title);
     }
 
-    static rotateCoverImageContainer() {
-        // debug.log(`rotateY(${this.currentRotation}deg)`);
-        // DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = ` rotateY(${this.currentRotation}deg) perspective(1000px)`;
+    static onBGMSelectChanged() {
+        debug.log(`Selected title : [${this.selectedMusicIdx}] ${this.BGMData[this.selectedMusicIdx].title}`);
+        this.currentRotation = this.BGM_COVERIMAGE_ROTATE_DEGREE * -this.selectedMusicRotationIdx;
         DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = `translateZ(-500px) perspective(1000px) rotateY(${this.currentRotation}deg)`;
-        SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`)
+        SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
+        this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
     }
 
     static setTitleAndDifficultyText() {
         DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.innerHTML =
-            `${BGMDatabase.getAllData()[this.selectedMusicIdx].title}<br>` +
+            `${this.BGMData[this.selectedMusicIdx].title}<br>` +
             `${this.currrentDifficulty}`;
-
     }
-
 
     static getCurrentDifficulty() {
         return this.DIFFICULTY[this.selectedDifficultyIdx];
@@ -88,20 +107,68 @@ export default class BGMSelector {
         DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.style.webkitTextStroke = `1px ${textStrokeColor}`
     }
 
-    static onBGMSelected(e) {
+    static resetAudioPreviewPlayer() {
+        clearTimeout(this.BGM_PREVIEW_FADEOUT_TIMEOUT_HANDLER);
+        clearInterval(this.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN);
+        clearInterval(this.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT);
+        const player = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
+        player.src = null;
+        player.volume = 0;
+    }
+
+    static playBGMPreview(title) {
+        const self = this;
+        debug.log(`playBGMPreview : [${title}}]`);
+        this.resetAudioPreviewPlayer()
+        const player = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
+        player.src = `data/sampleBGM/${title}.mp3`;
+        player.play();
+        const fadeCount = {
+            in: 0,
+            out: 0
+        }
+        if (player.oncanplaythrough === null) {
+            player.oncanplaythrough = () => {
+                // Fade In
+                debug.log(`Sample BGM play : ${player.duration} seconds`);
+                debug.log(`Sample BGM Fade in start`);
+                self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN = setInterval(() => {
+                    if (player.volume < 1 - this.BGM_PREVIEW_FADE_DIFF) {
+                        player.volume += this.BGM_PREVIEW_FADE_DIFF;
+                    } else {
+                        clearInterval(self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN);
+                    }
+                }, 100);
+
+                // Fade out
+                debug.log(`Sample BGM Fade out time : ${((player.duration * 1000) - this.BGM_PREVIEW_FADEOUT_TIMEOUT_START_TIMESTAMP)/ 1000 }`);
+                self.BGM_PREVIEW_FADEOUT_TIMEOUT_HANDLER = setTimeout(() => {
+                    debug.log(`Sample BGM Fade out start`);
+                    self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT = setInterval(() => {
+                        if (player.volume > this.BGM_PREVIEW_FADE_DIFF) {
+                            player.volume -= this.BGM_PREVIEW_FADE_DIFF;
+                        } else {
+                            clearInterval(self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT);
+                        }
+                    }, 100);
+                }, (player.duration * 1000) - this.BGM_PREVIEW_FADEOUT_TIMEOUT_START_TIMESTAMP);
+            }
+        }
+    }
+
+    static onBGMSelectorKeyPressed(e) {
         // debug.log(e)
 
-        const BGMData = BGMDatabase.getAllData();
+        const BGMData = this.BGMData;
         // Select BGM
         if (e.key === `ArrowLeft`) {
             this.selectedMusicIdx = (BGMData.length + this.selectedMusicIdx - 1) % BGMData.length;
-            this.currentRotation += this.BGM_COVERIMAGE_ROTATE_DEGREE;
-            this.rotateCoverImageContainer();
-            debug.log(`Selected title : [${this.selectedMusicIdx}] ${BGMData[this.selectedMusicIdx].title}`);
+            this.selectedMusicRotationIdx--;
+            this.onBGMSelectChanged();
         } else if (e.key === `ArrowRight`) {
             this.selectedMusicIdx = (this.selectedMusicIdx + 1) % BGMData.length;
-            this.currentRotation -= this.BGM_COVERIMAGE_ROTATE_DEGREE;
-            this.rotateCoverImageContainer();
+            this.selectedMusicRotationIdx++;
+            this.onBGMSelectChanged();
             debug.log(`Selected title : [${this.selectedMusicIdx}] ${BGMData[this.selectedMusicIdx].title}`);
         }
         // Select difficulty
@@ -114,6 +181,7 @@ export default class BGMSelector {
             this.onDifficultyChanged();
         } else if ((e.key === `Enter`) || (e.key === ` `)) {
             debug.log(`Selected`);
+            this.resetAudioPreviewPlayer();
             DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
             GamePlayScreenController.startGameByTitle(BGMData[this.selectedMusicIdx].title, this.getCurrentDifficulty());
         }

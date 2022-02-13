@@ -34,7 +34,8 @@ export default class DOMConatiners {
             keynotesContainers: null,
             keynoteCheckerContainer: null,
             keynoteCheckers: null,
-            pointDisplayContainer: null
+            pointDisplayContainer: null,
+            BGMPreviewPlayer: null
         },
         SelectMusicScreenContainer: {
             CoverImageContainer: null,
@@ -61,6 +62,7 @@ export default class DOMConatiners {
         this.Containers.GamePlayScreenContainer.keynoteCheckers = document.getElementsByClassName(`keynoteChecker`);
         this.Containers.GamePlayScreenContainer.pointDisplayContainer = document.getElementById(`pointDisplay`);
 
+        this.Containers.SelectMusicScreenContainer.BGMPreviewPlayer = document.getElementById(`BGMPreviewPlayer`);
         this.Containers.SelectMusicScreenContainer.CoverImageContainer = document.getElementById(`SelectMusicScreen_CoverImageContainer`);
         this.Containers.SelectMusicScreenContainer.SelectedMusicInfoContainer = document.getElementById(`SelectMusicScreen_SelectedMusicInfo`);
     }
