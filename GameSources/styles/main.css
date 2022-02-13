@@ -15,12 +15,19 @@ div.MainContainer {
     top: calc(50vh - 400px);
     width: 800px;
     height: 800px;
-    border: 5px solid black;
+    border: 5px solid red;
     background-color: white;
 }
 
-
-
 .transparentFadeIn {
     animation: transparentFadeIn linear 1s;
+}
+
+diV#SelectMusicScreen {
+    /* background-color: black; */
+}
+
+/* Test */
+div#GamePlayScreen {
+    display: none;
 }

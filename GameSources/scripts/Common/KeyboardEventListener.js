@@ -1,4 +1,4 @@
-import BGMSelector from "../BGMSelector";
+import BGMSelector from "../SelectBGMScreen/BGMSelector";
 import NoteCreator from "../GamePlayScreen/NoteCreator";
 
 export default class KeyboardEventListener {

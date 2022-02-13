@@ -4,49 +4,53 @@
 <head>
     <script src='https://www.youtube.com/iframe_api'></script>
     <script src='./scripts/bundle.js'></script>
-    <link rel='stylesheet' href="styles/Animation.css">
-    <link rel='stylesheet' href="styles/GamePlayScreen.css">
-    <link rel='stylesheet' href="styles/main.css">
+    <link rel='stylesheet' href='styles/Animation.css'>
+    <link rel='stylesheet' href='styles/SelectMusicScreen.css'>
+    <link rel='stylesheet' href='styles/GamePlayScreen.css'>
+    <link rel='stylesheet' href='styles/main.css'>
 </head>
 
 <body>
 
-    <div class="MainContainer" id="TitleScreen">
+    <div class='MainContainer' id='TitleScreen'>
         <canvas></canvas>
 
     </div>
 
-    <div class="MainContainer" id="SelectMusicScreen">
-        <img id="test">
+    <div class='MainContainer' id='SelectMusicScreen'>
+        <div class='SelectMusicScreen' id='SelectMusicScreenContainer'>
+            <div id="SelectMusicScreen_CoverImageContainer"> </div>
+            <div id="SelectMusicScreen_SelectedMusicInfo"></div>
+        </div>
     </div>
 
-    <div class="MainContainer" id="GamePlayScreen">
-        <div id="GamePlayVideo">
-            <div id="youtubeVideoPlayer"></div>
-            <div id="GamePlayVideo_Overlay"></div>
+    <div class='MainContainer' id='GamePlayScreen'>
+        <div id='GamePlayVideo'>
+            <div id='youtubeVideoPlayer'></div>
+            <div id='GamePlayVideo_Overlay'></div>
         </div>
-        <div id="getReadyText"></div>
-        <div id="keynoteChecker">
-            <div class="keynoteChecker" id="keynoteChecker_0"></div>
-            <div class="keynoteChecker" id="keynoteChecker_1"></div>
-            <div class="keynoteChecker" id="keynoteChecker_2"></div>
-            <div class="keynoteChecker" id="keynoteChecker_3"></div>
+        <div id='getReadyText'></div>
+        <div id='keynoteChecker'>
+            <div class='keynoteChecker' id='keynoteChecker_0'></div>
+            <div class='keynoteChecker' id='keynoteChecker_1'></div>
+            <div class='keynoteChecker' id='keynoteChecker_2'></div>
+            <div class='keynoteChecker' id='keynoteChecker_3'></div>
         </div>
-        <div id="keynotesContainerBackground"></div>
-        <div id="keynotesContainer">
-            <div class="keynotesContainer" id="keynotesContainer_0"></div>
-            <div class="keynotesContainer" id="keynotesContainer_1"></div>
-            <div class="keynotesContainer" id="keynotesContainer_2"></div>
-            <div class="keynotesContainer" id="keynotesContainer_3"></div>
+        <div id='keynotesContainerBackground'></div>
+        <div id='keynotesContainer'>
+            <div class='keynotesContainer' id='keynotesContainer_0'></div>
+            <div class='keynotesContainer' id='keynotesContainer_1'></div>
+            <div class='keynotesContainer' id='keynotesContainer_2'></div>
+            <div class='keynotesContainer' id='keynotesContainer_3'></div>
         </div>
-        <div id="pointDisplay"> </div>
-        <div id="keynotePressedContainer"> </div>
-        <div id="ComboCount"></div>
-        <div id="GameScore"></div>
-        <div id="Difficulty"></div>
+        <div id='pointDisplay'> </div>
+        <div id='keynotePressedContainer'> </div>
+        <div id='ComboCount'></div>
+        <div id='GameScore'></div>
+        <div id='Difficulty'></div>
     </div>
 
-    <div id="sfxPlayerContainer"></div>
+    <div id='sfxPlayerContainer'></div>
 
 </body>
 
