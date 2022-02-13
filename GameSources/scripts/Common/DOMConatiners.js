@@ -11,6 +11,13 @@ const debug = new Debug({
 
 export default class DOMConatiners {
 
+    static currentDisplayingContainer = null;
+
+    static MainContainer = {
+        SelectMusicScreen: `SelectMusicScreen`,
+        GamePlayScreen: `GamePlayScreen`
+    }
+
     static Containers = {
         Main: {
             GamePlayScreen: null,
@@ -61,5 +68,20 @@ export default class DOMConatiners {
 
     static get() {
         return this.Containers;
+    }
+
+    static getCurrentMainContainerName() {
+        return this.currentDisplayingContainer;
+    }
+
+    static showMainContainer(containerName) {
+        if (containerName in this.Containers.Main === true) {
+            this.currentDisplayingContainer = containerName;
+            for (const _container in this.Containers.Main) {
+                console.log(_container)
+                this.Containers.Main[_container].style.display = `hidden`;
+            }
+            this.Containers.Main[containerName].style.display = `inline-block`;
+        }
     }
 }

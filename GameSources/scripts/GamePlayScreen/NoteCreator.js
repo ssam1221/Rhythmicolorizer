@@ -13,6 +13,8 @@ const debug = new Debug({
 
 export default class NoteCreator {
 
+    static isInitialized = false;
+
     static Difficulty = {
         EASY: `Easy`,
         NORMAL: `Normal`,
@@ -85,9 +87,11 @@ export default class NoteCreator {
     }
 
     static initialize() {
-        debug.log(`Initializing...`);
-        this.createkeypressNotes();
-        this.createPointMatchedElements();
+        if (this.isInitialized === false) {
+            debug.log(`Initializing...`);
+            this.createkeypressNotes();
+            this.createPointMatchedElements();
+        }
     }
 
     static getCurrentNoteIndex() {

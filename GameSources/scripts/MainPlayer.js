@@ -20,14 +20,14 @@ import GamePlayScreenController from "./GamePlayScreenController"
         SFXPlayer.initialize();
         await BGMDatabase.initialize();
         await BGMSelector.initialize();
-        // await BGMPlayer.initialize();
-        // NoteCreator.initialize();
+        await BGMPlayer.initialize();
+        NoteCreator.initialize();
         // document.getElementById("test").src = BGMPlayer.getCoverImage("Night Beach Memories");
 
 
         // debug.log(BGMSelector.getBGMListInfo());
 
-        KeyboardEventListener.setCurrentMode("SelectBGM");
+        // KeyboardEventListener.setCurrentMode("SelectBGM");
         // KeyboardEventListener.setCurrentMode("SelectBGM");
         KeyboardEventListener.addKeyboardEventListener();
 
@@ -37,7 +37,7 @@ import GamePlayScreenController from "./GamePlayScreenController"
             event.preventDefault();
         };
 
-        BGMSelector.show();
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
 
 
         // Game Play Test

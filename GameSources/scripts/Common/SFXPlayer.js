@@ -20,7 +20,7 @@ export default class SFXPlayer {
         if (typeof src !== `string`) {
             return;
         }
-        this.AudioTags[this.currentAudioTagIndex].src = src;
+        this.AudioTags[this.currentAudioTagIndex].src = `data/sfx/${src}`;
         this.AudioTags[this.currentAudioTagIndex].play();
         this.currentAudioTagIndex = (++this.currentAudioTagIndex) % this.NUM_AUDIO_TAG;
     }

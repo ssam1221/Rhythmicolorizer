@@ -9,12 +9,19 @@ const debug = new Debug({
 });
 
 export default class BGMPlayer {
+
+    static isInitialized = false;
+
     static currentBGM = ``;
     static isBGMStart = false;
     static isGameStart = false;
     static player;
 
-    static initialize() {}
+    static initialize() {
+        if (this.isInitialized === false) {
+            // Do something
+        }
+    }
 
     static getBGMDuration() {
         // Seconds
@@ -61,11 +68,11 @@ export default class BGMPlayer {
         function countdown() {
             return new Promise((resolve, reject) => {
                 DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `Get<br>Ready?`;
-                SFXPlayer.play(`data/sfx/voice/get_ready.wav`);
+                SFXPlayer.play(`voice/get_ready.wav`);
                 DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
                 setTimeout(() => {
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
-                    SFXPlayer.play(`data/sfx/voice/three.wav`);
+                    SFXPlayer.play(`voice/three.wav`);
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `3`;
                     setTimeout(() => {
                         DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
@@ -73,7 +80,7 @@ export default class BGMPlayer {
                 }, 1000);
                 setTimeout(() => {
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
-                    SFXPlayer.play(`data/sfx/voice/two.wav`);
+                    SFXPlayer.play(`voice/two.wav`);
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `2`;
                     setTimeout(() => {
                         DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
@@ -81,7 +88,7 @@ export default class BGMPlayer {
                 }, 2000);
                 setTimeout(() => {
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
-                    SFXPlayer.play(`data/sfx/voice/one.wav`);
+                    SFXPlayer.play(`voice/one.wav`);
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `1`;
                     setTimeout(() => {
                         DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
@@ -89,7 +96,7 @@ export default class BGMPlayer {
                 }, 3000);
                 setTimeout(() => {
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, ``);
-                    SFXPlayer.play(`data/sfx/voice/start.wav`);
+                    SFXPlayer.play(`voice/start.wav`);
                     DOMConatiners.get().GamePlayScreenContainer.GetReadyText.innerHTML = `Start!`;
                     setTimeout(() => {
                         DOMConatiners.get().GamePlayScreenContainer.GetReadyText.setAttribute(`class`, `GetReadyAnimation`);
