@@ -14,14 +14,21 @@ export default class DOMConatiners {
     static currentDisplayingContainer = null;
 
     static MainContainer = {
+        LoadingScreen: `LoadingScreen`,
         SelectMusicScreen: `SelectMusicScreen`,
         GamePlayScreen: `GamePlayScreen`
     }
 
     static Containers = {
         Main: {
+            LoadingScreen: null,
             GamePlayScreen: null,
             SelectMusicScreen: null,
+        },
+        LoadingScreenContainer: {
+            InitialLoading: null,
+            PlayLoading: null,
+            InitialLoadingTips: null,
         },
         GamePlayScreenContainer: {
             ComboCount: null,
@@ -47,8 +54,12 @@ export default class DOMConatiners {
 
     static initialize() {
         debug.log(`Initialize...`);
-        this.Containers.Main.GamePlayScreen = document.getElementById(`GamePlayScreen`);
-        this.Containers.Main.SelectMusicScreen = document.getElementById(`SelectMusicScreen`);
+        for (const mainContainerName in this.MainContainer) {
+            this.Containers.Main[mainContainerName] = document.getElementById(mainContainerName);
+        }
+        this.Containers.LoadingScreenContainer.InitialLoading = document.getElementById(`InitialLoading`);
+        this.Containers.LoadingScreenContainer.PlayLoading = document.getElementById(`PlayLoading`);
+        this.Containers.LoadingScreenContainer.InitialLoadingTips = document.getElementById(`InitialLoadingTips`);
 
         this.Containers.GamePlayScreenContainer.ComboCount = document.getElementById(`ComboCount`);
         this.Containers.GamePlayScreenContainer.GameScore = document.getElementById(`GameScore`);
@@ -77,11 +88,11 @@ export default class DOMConatiners {
     }
 
     static showMainContainer(containerName) {
+        debug.log(`Show Main container : `, containerName);
         if (containerName in this.Containers.Main === true) {
             this.currentDisplayingContainer = containerName;
             for (const _container in this.Containers.Main) {
-                console.log(_container)
-                this.Containers.Main[_container].style.display = `hidden`;
+                this.Containers.Main[_container].style.display = `none`;
             }
             this.Containers.Main[containerName].style.display = `inline-block`;
         }

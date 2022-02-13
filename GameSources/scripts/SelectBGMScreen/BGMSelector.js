@@ -51,7 +51,6 @@ export default class BGMSelector {
         this.BGMData = BGMDatabase.getAllData();
         this.selectedMusicIdx = parseInt(Math.random() * this.BGMData.length);
         this.selectedMusicRotationIdx = this.selectedMusicIdx;
-        debug.log(`selectedMusicIdx : `, this.selectedMusicIdx);
         this.BGM_COVERIMAGE_ROTATE_DEGREE = 360 / this.BGMData.length;
 
         this.currrentDifficulty = this.DIFFICULTY[this.selectedDifficultyIdx];
@@ -65,7 +64,7 @@ export default class BGMSelector {
             const span = document.createElement(`span`);
             span.id = `coverImage_${idx}`
             span.setAttribute(`class`, `coverImage`);
-            debug.log(`Rotate to : `, rotatedDegree)
+            // debug.log(`Rotate to : `, rotatedDegree);
             span.style.transform = `rotateY(${rotatedDegree}deg) translateZ(600px)`;
 
             const imgTag = document.createElement(`img`);
@@ -78,16 +77,19 @@ export default class BGMSelector {
         }
 
         this.setTitleAndDifficultyText();
-        this.onBGMSelectChanged();
+        this.onBGMSelectChanged(true);
+        this.resetAudioPreviewPlayer();
         // this.playBGMPreview(this.BGMData[0].title);
     }
 
-    static onBGMSelectChanged() {
+    static onBGMSelectChanged(isInitial) {
         debug.log(`Selected title : [${this.selectedMusicIdx}] ${this.BGMData[this.selectedMusicIdx].title}`);
         this.currentRotation = this.BGM_COVERIMAGE_ROTATE_DEGREE * -this.selectedMusicRotationIdx;
         DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = `translateZ(-500px) perspective(1000px) rotateY(${this.currentRotation}deg)`;
-        SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
-        this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
+        if (true !== isInitial) {
+            SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
+            this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
+        }
     }
 
     static setTitleAndDifficultyText() {
@@ -112,13 +114,14 @@ export default class BGMSelector {
         clearInterval(this.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN);
         clearInterval(this.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT);
         const player = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
-        player.src = null;
+        player.pause();
+        player.currentTime = 0;
         player.volume = 0;
     }
 
-    static playBGMPreview(title) {
+    static playBGMPreview(title = this.BGMData[this.selectedMusicIdx].title) {
         const self = this;
-        debug.log(`playBGMPreview : [${title}}]`);
+        // debug.log(`playBGMPreview : [${title}}]`);
         this.resetAudioPreviewPlayer()
         const player = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
         player.src = `data/sampleBGM/${title}.mp3`;
@@ -130,8 +133,8 @@ export default class BGMSelector {
         if (player.oncanplaythrough === null) {
             player.oncanplaythrough = () => {
                 // Fade In
-                debug.log(`Sample BGM play : ${player.duration} seconds`);
-                debug.log(`Sample BGM Fade in start`);
+                // debug.log(`Sample BGM play : ${player.duration} seconds`);
+                // debug.log(`Sample BGM Fade in start`);
                 self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN = setInterval(() => {
                     if (player.volume < 1 - this.BGM_PREVIEW_FADE_DIFF) {
                         player.volume += this.BGM_PREVIEW_FADE_DIFF;
@@ -141,9 +144,9 @@ export default class BGMSelector {
                 }, 100);
 
                 // Fade out
-                debug.log(`Sample BGM Fade out time : ${((player.duration * 1000) - this.BGM_PREVIEW_FADEOUT_TIMEOUT_START_TIMESTAMP)/ 1000 }`);
+                // debug.log(`Sample BGM Fade out time : ${((player.duration * 1000) - this.BGM_PREVIEW_FADEOUT_TIMEOUT_START_TIMESTAMP)/ 1000 }`);
                 self.BGM_PREVIEW_FADEOUT_TIMEOUT_HANDLER = setTimeout(() => {
-                    debug.log(`Sample BGM Fade out start`);
+                    // debug.log(`Sample BGM Fade out start`);
                     self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT = setInterval(() => {
                         if (player.volume > this.BGM_PREVIEW_FADE_DIFF) {
                             player.volume -= this.BGM_PREVIEW_FADE_DIFF;

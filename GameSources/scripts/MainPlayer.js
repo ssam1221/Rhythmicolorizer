@@ -6,7 +6,7 @@ import DOMConatiners from "./Common/DOMConatiners"
 import KeyboardEventListener from "./Common/KeyboardEventListener";
 import NoteCreator from "./GamePlayScreen/NoteCreator";
 import SFXPlayer from "./Common/SFXPlayer";
-
+import LoadingController from "./Common/LoadingController"
 import GamePlayScreenController from "./GamePlayScreenController"
 // import LoadingController from "./LoadingController";
 (() => {
@@ -17,6 +17,8 @@ import GamePlayScreenController from "./GamePlayScreenController"
         });
         debug.log(`Start`);
         DOMConatiners.initialize();
+        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.LoadingScreen);
+        LoadingController.showInitialLoading();
         SFXPlayer.initialize();
         await BGMDatabase.initialize();
         await BGMSelector.initialize();
@@ -37,8 +39,19 @@ import GamePlayScreenController from "./GamePlayScreenController"
             event.preventDefault();
         };
 
+        // Test & to load all images, delay 3 seconds
+        await (() => {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, 2000);
+            })
+        })();
+
+        LoadingController.hideInitialLoading();
+
         DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
 
+        // Test
+        BGMSelector.playBGMPreview();
 
         // Game Play Test
         // document.onclick = async (e) => {

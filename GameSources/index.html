@@ -6,6 +6,7 @@
     <script src='./scripts/bundle.js'></script>
     <link rel='stylesheet' href='styles/Animation.css'>
     <link rel='stylesheet' href='styles/SelectMusicScreen.css'>
+    <link rel='stylesheet' href='styles/Loading.css'>
     <link rel='stylesheet' href='styles/GamePlayScreen.css'>
     <link rel='stylesheet' href='styles/main.css'>
 </head>
@@ -14,14 +15,13 @@
 
     <div class='MainContainer' id='TitleScreen'>
         <canvas></canvas>
-
     </div>
 
     <div class='MainContainer' id='SelectMusicScreen'>
-        <audio id="BGMPreviewPlayer" loop></audio>
+        <audio id='BGMPreviewPlayer' loop preload=none></audio>
         <div class='SelectMusicScreen' id='SelectMusicScreenContainer'>
-            <div id="SelectMusicScreen_CoverImageContainer"> </div>
-            <div id="SelectMusicScreen_SelectedMusicInfo"></div>
+            <div id='SelectMusicScreen_CoverImageContainer'> </div>
+            <div id='SelectMusicScreen_SelectedMusicInfo'></div>
         </div>
     </div>
 
@@ -49,6 +49,17 @@
         <div id='ComboCount'></div>
         <div id='GameScore'></div>
         <div id='Difficulty'></div>
+    </div>
+
+    <div class='MainContainer' id='LoadingScreen'>
+        <div class='LoadingScreen' id='InitialLoading'>
+            <div class='loading-container'>
+                <div class='loading'></div>
+                <div id='loading-text'>Loading</div>
+            </div>
+            <div class='LoadingScreen' id='InitialLoadingTips'></div>
+        </div>
+        <div class='LoadingScreen' id='PlayLoading'></div>
     </div>
 
     <div id='sfxPlayerContainer'></div>
