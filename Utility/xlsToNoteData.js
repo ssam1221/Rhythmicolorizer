@@ -28,13 +28,14 @@ for (const xlsFile of xlsFiles) {
         if (false === isValidSheet(difficulty)) {
             continue;
         }
-        noteData[difficulty] = [];
+        const CAPITALIZE_DIFFICULITY = difficulty.toUpperCase();
+        noteData[CAPITALIZE_DIFFICULITY] = [];
         let noteList = xlsx.utils.sheet_to_json(workbook.Sheets[difficulty]);
         for (const note of noteList) {
             if (!note.key || !note.timestamp) {
                 continue;
             }
-            noteData[difficulty].push({
+            noteData[CAPITALIZE_DIFFICULITY].push({
                 key: note.key,
                 timestamp: note.timestamp
             });
