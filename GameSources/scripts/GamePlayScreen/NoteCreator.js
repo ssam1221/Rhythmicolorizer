@@ -263,7 +263,7 @@ export default class NoteCreator {
 
     static keypressNote(_key) {
 
-        SFXPlayer.play(`./data/sfx/hat.mp3`);
+        SFXPlayer.play(`GamePlayScreen/NotePressed.mp3`);
         ((key) => {
             const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
             // debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
