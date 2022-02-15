@@ -26,3 +26,16 @@ div.MainContainer {
 diV#SelectMusicScreen {
     /* background-color: black; */
 }
+
+div#fadeOverlay {
+    background-color: black;
+    opacity: 0;
+}
+
+div#fadeOverlay.MainOverlayFadeIn {
+    animation: MainOverlayFadeIn 1s linear;
+}
+ 
+div#fadeOverlay.MainOverlayFadeOut {
+    animation: MainOverlayFadeOut 1s linear;
+}

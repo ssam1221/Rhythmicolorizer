@@ -41,28 +41,39 @@ function getHint() {
     return hints[parseInt(Math.random() * hints.length)];
 }
 
-function setHintText(el) {
-    DOMConatiners.get().LoadingScreenContainer[el].innerHTML = getHint();
+function setHintText({
+    element
+}) {
+    DOMConatiners.get().LoadingScreenContainer[element].innerHTML = getHint();
 }
 
 export default class LoadingController {
 
 
     static showInitialLoading() {
+        console.log(DOMConatiners.get().FadeOverlay)
         show(DOMConatiners.get().LoadingScreenContainer.InitialLoading);
-        setHintText(`InitialLoadingTips`);
+        DOMConatiners.get().FadeOverlay.setAttribute(`class`, `MainContainer MainOverlayFadeIn`);
+        setHintText({
+            element: `InitialLoadingTips`
+        });
     }
 
     static hideInitialLoading() {
         hide(DOMConatiners.get().LoadingScreenContainer.InitialLoading);
+        DOMConatiners.get().FadeOverlay.setAttribute(`class`, `MainContainer MainOverlayFadeOut`);
     }
 
     static showPlayLoading() {
+        DOMConatiners.get().FadeOverlay.setAttribute(`class`, `MainContainer MainOverlayFadeIn`);
         show(DOMConatiners.get().LoadingScreenContainer.PlayLoading);
-        setHintText(`InitialLoadingTips`);
+        setHintText({
+            element: `InitialLoadingTips`
+        });
     }
 
     static hidePlayLoading() {
+        DOMConatiners.get().FadeOverlay.setAttribute(`class`, `MainContainer MainOverlayFadeOut`);
         hide(DOMConatiners.get().LoadingScreenContainer.PlayLoading);
     }
 }

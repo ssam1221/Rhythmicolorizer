@@ -20,6 +20,7 @@ export default class DOMConatiners {
     }
 
     static Containers = {
+        FadeOverlay: null,
         Main: {
             LoadingScreen: null,
             GamePlayScreen: null,
@@ -54,6 +55,7 @@ export default class DOMConatiners {
 
     static initialize() {
         debug.log(`Initialize...`);
+        this.Containers.FadeOverlay = document.getElementById(`FadeOverlay`);
         for (const mainContainerName in this.MainContainer) {
             this.Containers.Main[mainContainerName] = document.getElementById(mainContainerName);
         }

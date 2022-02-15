@@ -44,9 +44,14 @@ export default class BGMSelector {
 
     static currentRotation = 0;
 
+    // Visualizer
+    static VisualizerAudioContext;
+
     // Rotate ref : https://www.youtube.com/watch?v=j1-Ak3WWV_g
     static async initialize() {
         debug.log(`Initializing...`);
+
+        this.initializeVisualizer();
 
         this.BGMData = BGMDatabase.getAllData();
         this.selectedMusicIdx = parseInt(Math.random() * this.BGMData.length);
@@ -61,34 +66,58 @@ export default class BGMSelector {
             const bgmInfo = this.BGMData[idx];
             const title = bgmInfo.title;
             const coverImage = bgmInfo.coverImage;
-            const span = document.createElement(`span`);
-            span.id = `coverImage_${idx}`
-            span.setAttribute(`class`, `coverImage`);
+            const div = document.createElement(`div`);
+            div.id = `coverImage_${idx}`
+            div.setAttribute(`class`, `coverImage`);
             // debug.log(`Rotate to : `, rotatedDegree);
-            span.style.transform = `rotateY(${rotatedDegree}deg) translateZ(600px)`;
+            div.style.transform = `rotateY(${rotatedDegree}deg) translateZ(600px)`;
 
             const imgTag = document.createElement(`img`);
             imgTag.setAttribute(`class`, `coverImage_imgTag`);
+            imgTag.id = `coverImageImgTag_${idx}`
             imgTag.src = coverImage;
-            span.appendChild(imgTag)
+            imgTag.style.overflow = `visible`;
+            div.appendChild(imgTag)
             // console.log(`rotateY(${idx * this.BGM_COVERIMAGE_ROTATE_DEGREE}deg);`);
 
-            DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.appendChild(span);
+            DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.appendChild(div);
         }
 
         this.setTitleAndDifficultyText();
-        this.onBGMSelectChanged(true);
+        this.onBGMSelectChanged({
+            isInitial: true
+        });
         this.resetAudioPreviewPlayer();
         // this.playBGMPreview(this.BGMData[0].title);
     }
 
-    static onBGMSelectChanged(isInitial) {
+    static onArrowKeyPressed({
+        type,
+        direction
+    }) {
+        document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow`);
+        document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow ArrowPressed`);
+        setTimeout(() => {
+            document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow`);
+        }, 500);
+    }
+
+    static onBGMSelectChanged({
+        isInitial,
+        arrowDirection
+    }) {
         debug.log(`Selected title : [${this.selectedMusicIdx}] ${this.BGMData[this.selectedMusicIdx].title}`);
         this.currentRotation = this.BGM_COVERIMAGE_ROTATE_DEGREE * -this.selectedMusicRotationIdx;
         DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = `translateZ(-500px) perspective(1000px) rotateY(${this.currentRotation}deg)`;
         if (true !== isInitial) {
-            SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
             this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
+        };
+        if (arrowDirection) {
+            SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
+            this.onArrowKeyPressed({
+                type: `Music`,
+                direction: arrowDirection
+            });
         }
     }
 
@@ -102,11 +131,21 @@ export default class BGMSelector {
         return this.DIFFICULTY[this.selectedDifficultyIdx];
     }
 
-    static onDifficultyChanged() {
+    static onDifficultyChanged({
+        arrowDirection = null
+    }) {
         this.currrentDifficulty = this.getCurrentDifficulty();
         const textStrokeColor = this.DIFFICULTY_COLOR[this.currrentDifficulty];
         debug.log(`Difficulty change to : [${this.currrentDifficulty}], stroke : [${textStrokeColor}]`);
         DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.style.webkitTextStroke = `1px ${textStrokeColor}`
+
+        if (arrowDirection) {
+            SFXPlayer.play(`SelectMusicScreen/onBGMSelected.mp3`);
+            this.onArrowKeyPressed({
+                type: `Difficulty`,
+                direction: arrowDirection
+            });
+        }
     }
 
     static resetAudioPreviewPlayer() {
@@ -167,21 +206,30 @@ export default class BGMSelector {
         if (e.key === `ArrowLeft`) {
             this.selectedMusicIdx = (BGMData.length + this.selectedMusicIdx - 1) % BGMData.length;
             this.selectedMusicRotationIdx--;
-            this.onBGMSelectChanged();
+            this.onBGMSelectChanged({
+                arrowDirection: `Left`
+            });
+
         } else if (e.key === `ArrowRight`) {
             this.selectedMusicIdx = (this.selectedMusicIdx + 1) % BGMData.length;
             this.selectedMusicRotationIdx++;
-            this.onBGMSelectChanged();
+            this.onBGMSelectChanged({
+                arrowDirection: `Right`
+            });
             debug.log(`Selected title : [${this.selectedMusicIdx}] ${BGMData[this.selectedMusicIdx].title}`);
         }
         // Select difficulty
         if (e.key === `ArrowUp`) {
             this.selectedDifficultyIdx = (this.DIFFICULTY.length + this.selectedDifficultyIdx - 1) % this.DIFFICULTY.length;
-            this.onDifficultyChanged();
+            this.onDifficultyChanged({
+                arrowDirection: `Up`
+            });
         }
         if (e.key === `ArrowDown`) {
             this.selectedDifficultyIdx = (this.selectedDifficultyIdx + 1) % this.DIFFICULTY.length;
-            this.onDifficultyChanged();
+            this.onDifficultyChanged({
+                arrowDirection: `Down`
+            });
         } else if ((e.key === `Enter`) || (e.key === ` `)) {
             debug.log(`Selected`);
             this.resetAudioPreviewPlayer();
@@ -189,5 +237,49 @@ export default class BGMSelector {
             GamePlayScreenController.startGameByTitle(BGMData[this.selectedMusicIdx].title, this.getCurrentDifficulty());
         }
         this.setTitleAndDifficultyText();
+    }
+
+    static initializeVisualizer() {
+        this.VisualizerAudioContext = new AudioContext();
+        const audioTag = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
+        const audioSource = this.VisualizerAudioContext.createMediaElementSource(audioTag);
+        const analayzer = this.VisualizerAudioContext.createAnalyser();
+        audioSource.connect(analayzer);
+        audioSource.connect(this.VisualizerAudioContext.destination);
+        const frequencyData = new Uint8Array(analayzer.frequencyBinCount);
+        // }
+
+        const avg = (arr) => {
+            let sum = 0;
+            for (const el of arr) {
+                sum += el;
+            }
+            return parseInt(sum / arr.length);
+        }
+
+        // static renderFrame() {
+        const renderFrame = () => {
+            for (let idx = 0; idx < this.BGMData.length; idx++) {
+                // Remove scale up
+                document.getElementById(`coverImage_${idx}`).style.transform =
+                    document.getElementById(`coverImage_${idx}`).style.transform.split(`scale`)[0];
+            }
+
+            analayzer.getByteFrequencyData(frequencyData);
+            // const scaleValue = (1 + (avg(frequencyData)) / 500);
+            const scaleValue = (1 + (frequencyData[128]) / 500);
+            const target = document.getElementById(`coverImage_${this.selectedMusicIdx}`);
+            if (target) {
+                const prevTransform = target.style.transform.split(`scale`)[0];
+                target.style.transform = `${prevTransform} scale(${scaleValue})`;
+            }
+            window.requestAnimationFrame(renderFrame);
+        }
+
+        window.requestAnimationFrame(renderFrame);
+    }
+
+    static startVisualizer() {
+        window.requestAnimationFrame(this.renderFrame);
     }
 }
