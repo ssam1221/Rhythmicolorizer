@@ -5,6 +5,7 @@
     <script src='https://www.youtube.com/iframe_api'></script>
     <script src='./scripts/bundle.js'></script>
     <link rel='stylesheet' href='styles/Animation.css'>
+    <link rel='stylesheet' href='styles/TitleScreen.css'>
     <link rel='stylesheet' href='styles/SelectMusicScreen.css'>
     <link rel='stylesheet' href='styles/Loading.css'>
     <link rel='stylesheet' href='styles/GamePlayScreen.css'>
@@ -14,7 +15,14 @@
 <body>
 
     <div class='MainContainer' id='TitleScreen'>
-        <canvas></canvas>
+        <div class='TitleScreen' id='FlexContainer'>
+            <div class='TitleScreen' id='TitleText'>
+                아직 제목을 정하지 못한 리듬게임
+            </div>
+            <div class='TitleScreen' id='PressAnyKey'>
+                Press any key
+            </div>
+        </div>
     </div>
 
     <div class='MainContainer' id='SelectMusicScreen'>

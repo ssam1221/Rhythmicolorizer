@@ -51,7 +51,6 @@ export default class LoadingController {
 
 
     static showInitialLoading() {
-        console.log(DOMConatiners.get().FadeOverlay)
         show(DOMConatiners.get().LoadingScreenContainer.InitialLoading);
         DOMConatiners.get().FadeOverlay.setAttribute(`class`, `MainContainer MainOverlayFadeIn`);
         setHintText({

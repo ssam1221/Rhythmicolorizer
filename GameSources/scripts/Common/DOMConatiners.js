@@ -14,6 +14,7 @@ export default class DOMConatiners {
     static currentDisplayingContainer = null;
 
     static MainContainer = {
+        TitleScreen: `TitleScreen`,
         LoadingScreen: `LoadingScreen`,
         SelectMusicScreen: `SelectMusicScreen`,
         GamePlayScreen: `GamePlayScreen`
@@ -87,6 +88,12 @@ export default class DOMConatiners {
 
     static getCurrentMainContainerName() {
         return this.currentDisplayingContainer;
+    }
+
+    static hideAll() {
+        for (const _container in this.Containers.Main) {
+            this.Containers.Main[_container].style.display = `none`;
+        }
     }
 
     static showMainContainer(containerName) {

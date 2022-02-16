@@ -1,3 +1,4 @@
+import TitleScreenController from "../TitleScreen/TitleScreenController";
 import BGMSelector from "../SelectBGMScreen/BGMSelector";
 import DOMConatiners from "./DOMConatiners";
 import NoteCreator from "../GamePlayScreen/NoteCreator";
@@ -9,17 +10,17 @@ export default class KeyboardEventListener {
 
             switch (DOMConatiners.getCurrentMainContainerName()) {
                 case ``:
+                    break;
+                case DOMConatiners.MainContainer.TitleScreen:
+                    TitleScreenController.onkeyEvent(e);
+                    break;
+                case DOMConatiners.MainContainer.LoadingScreen:
 
                     break;
-                case `MainMenu`:
-                    break;
-                case `Loading`:
-
-                    break;
-                case `SelectMusicScreen`:
+                case DOMConatiners.MainContainer.SelectMusicScreen:
                     BGMSelector.onBGMSelectorKeyPressed(e);
                     break;
-                case `GamePlayScreen`:
+                case DOMConatiners.MainContainer.GamePlayScreen:
                     NoteCreator.onkeypress(e);
                     break;
             }

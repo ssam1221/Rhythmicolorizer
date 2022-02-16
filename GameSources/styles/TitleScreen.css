@@ -1,0 +1,21 @@
+div.TitleScreen#FlexContainer {
+    text-align: center;
+}
+
+div.TitleScreen#TitleText {
+    position: absolute;
+    top: 40%;
+    left:0;
+    height: 40%;
+    width: 100%;
+    font-size: 32px;
+}
+
+div.TitleScreen#PressAnyKey {
+    position: absolute;
+    left: 0;
+    bottom: 10%;
+    width: 100%;
+    height: 10%;
+    font-size: 24px;
+}

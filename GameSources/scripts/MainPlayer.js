@@ -7,6 +7,7 @@ import KeyboardEventListener from "./Common/KeyboardEventListener";
 import NoteCreator from "./GamePlayScreen/NoteCreator";
 import SFXPlayer from "./Common/SFXPlayer";
 import LoadingController from "./Common/LoadingController"
+import TitleScreenController from "./TitleScreen/TitleScreenController"
 import GamePlayScreenController from "./GamePlayScreenController"
 // import LoadingController from "./LoadingController";
 (() => {
@@ -48,10 +49,10 @@ import GamePlayScreenController from "./GamePlayScreenController"
 
         LoadingController.hideInitialLoading();
 
-        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
 
         // Test
-        BGMSelector.playBGMPreview();
+        // BGMSelector.playBGMPreview();
 
         // Game Play Test
         // document.onclick = async (e) => {
