@@ -2,6 +2,7 @@ import Debug from "../Common/Debug";
 import BGMDatabase from "../BGMDatabase";
 import DOMConatiners from "../Common/DOMConatiners";
 import GamePlayScreenController from "../GamePlayScreenController"
+import LoadingController from "../Common/LoadingController";
 import SFXPlayer from "../Common/SFXPlayer";
 
 const debug = new Debug({
@@ -39,6 +40,7 @@ export default class BGMSelector {
     static selectedMusicIdx;
     static selectedMusicRotationIdx;
 
+    static isBGMSelected = false;
 
     static BGM_COVERIMAGE_ROTATE_DEGREE;
 
@@ -109,6 +111,9 @@ export default class BGMSelector {
         debug.log(`Selected title : [${this.selectedMusicIdx}] ${this.BGMData[this.selectedMusicIdx].title}`);
         this.currentRotation = this.BGM_COVERIMAGE_ROTATE_DEGREE * -this.selectedMusicRotationIdx;
         DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = `translateZ(-500px) perspective(1000px) rotateY(${this.currentRotation}deg)`;
+
+        DOMConatiners.get().SelectMusicScreenContainer.BGMSelected.style.backgroundImage = `url('${this.BGMData[this.selectedMusicIdx].coverImage}')`;
+        console.log(DOMConatiners.get().SelectMusicScreenContainer.BGMSelected.style.backgroundImage)
         if (true !== isInitial) {
             this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
         };
@@ -198,6 +203,40 @@ export default class BGMSelector {
         }
     }
 
+    static onBGMSelected() {
+        const self = this;
+
+        SFXPlayer.play(`SelectMusicScreen/bgmSelected.mp3`);
+        const player = DOMConatiners.get().SelectMusicScreenContainer.BGMPreviewPlayer;
+
+        // Fade out current preview sound
+        clearTimeout(self.BGM_PREVIEW_FADEOUT_TIMEOUT_HANDLER);
+        clearInterval(self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.IN);
+        clearInterval(self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT);
+        self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT = setInterval(() => {
+            if (player.volume > this.BGM_PREVIEW_FADE_DIFF) {
+                player.volume -= this.BGM_PREVIEW_FADE_DIFF;
+            } else {
+                clearInterval(self.BGM_PREVIEW_FADE_INTERVAL_HANDLER.OUT);
+            }
+        }, 100);
+        const selectedContainer = DOMConatiners.get().SelectMusicScreenContainer.BGMSelected;
+        const prevClass = selectedContainer.getAttribute(`class`);
+        selectedContainer.setAttribute(`class`, `${prevClass} onSelected`);
+        LoadingController.showPlayLoading();
+        setTimeout(() => {
+            DOMConatiners.hideAll();
+        }, 1000);
+        setTimeout(() => {
+            selectedContainer.setAttribute(`class`, `${prevClass}`);
+            self.resetAudioPreviewPlayer();
+            DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
+            GamePlayScreenController.startGameByTitle(self.BGMData[self.selectedMusicIdx].title, this.getCurrentDifficulty());
+            LoadingController.hidePlayLoading();
+            this.isBGMSelected = false;
+        }, 2000);
+    }
+
     static onBGMSelectorKeyPressed(e) {
         // debug.log(e)
 
@@ -231,10 +270,11 @@ export default class BGMSelector {
                 arrowDirection: `Down`
             });
         } else if ((e.key === `Enter`) || (e.key === ` `)) {
-            debug.log(`Selected`);
-            this.resetAudioPreviewPlayer();
-            DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
-            GamePlayScreenController.startGameByTitle(BGMData[this.selectedMusicIdx].title, this.getCurrentDifficulty());
+            if (this.isBGMSelected === false) {
+                this.isBGMSelected = true;
+                debug.log(`Selected`);
+                this.onBGMSelected();
+            }
         }
         this.setTitleAndDifficultyText();
     }

@@ -32,6 +32,13 @@ export default class DOMConatiners {
             PlayLoading: null,
             InitialLoadingTips: null,
         },
+        SelectMusicScreenContainer: {
+            CoverImageContainer: null,
+            CoverImages: null,
+            SelectedMusicInfoContainer: null,
+            SelectMusicScreen_SelectedMusicInfo: null,
+            BGMSelected: null,
+        },
         GamePlayScreenContainer: {
             ComboCount: null,
             GameScore: null,
@@ -44,13 +51,7 @@ export default class DOMConatiners {
             keynoteCheckerContainer: null,
             keynoteCheckers: null,
             pointDisplayContainer: null,
-            BGMPreviewPlayer: null
-        },
-        SelectMusicScreenContainer: {
-            CoverImageContainer: null,
-            CoverImages: null,
-            SelectedMusicInfoContainer: null,
-            SelectMusicScreen_SelectedMusicInfo: null
+            BGMPreviewPlayer: null,
         }
     }
 
@@ -79,6 +80,7 @@ export default class DOMConatiners {
         this.Containers.SelectMusicScreenContainer.BGMPreviewPlayer = document.getElementById(`BGMPreviewPlayer`);
         this.Containers.SelectMusicScreenContainer.CoverImageContainer = document.getElementById(`SelectMusicScreen_CoverImageContainer`);
         this.Containers.SelectMusicScreenContainer.SelectedMusicInfoContainer = document.getElementById(`SelectMusicScreen_SelectedMusicInfo`);
+        this.Containers.SelectMusicScreenContainer.BGMSelected = document.getElementById(`BGMSelected`);
     }
 
 

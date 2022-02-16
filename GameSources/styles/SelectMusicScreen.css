@@ -121,3 +121,18 @@ div.SelectMusicScreen.MusicSelectArrow {
 div.ArrowPressed {
     animation: ArrowPressed 0.5s linear;
 }
+
+div.SelectMusicScreen#BGMSelected {
+    position: absolute;
+    left: 217px;
+    top: 105px;
+    width: 390;
+    height: 390;
+    background-repeat : no-repeat;
+    background-size : cover;
+    opacity: 0;
+}
+
+div.SelectMusicScreen#BGMSelected.onSelected {
+    animation: BGMSelectedZoomIn linear 1s;
+}

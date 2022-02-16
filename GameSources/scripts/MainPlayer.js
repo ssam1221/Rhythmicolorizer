@@ -49,10 +49,11 @@ import GamePlayScreenController from "./GamePlayScreenController"
 
         LoadingController.hideInitialLoading();
 
-        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
+        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
 
         // Test
-        // BGMSelector.playBGMPreview();
+        BGMSelector.playBGMPreview();
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
 
         // Game Play Test
         // document.onclick = async (e) => {
