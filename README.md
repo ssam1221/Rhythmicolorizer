@@ -1,13 +1,12 @@
-Typing! Script
+Rhythmicolorizer
 ==============
-#### Play : https://ssam1221.github.io/Typing-Script/
+#### Play : https://ssam1221.github.io/Rhythmicolorizer
 
 ### Description
 Typing! Script is a rhythm game based on PC keyboard.
 
 ### How to play (for test now)
-After all loading is compoleted, click the grey screen, then game will be loaded and start to play.
-Type correct key for imcoming notes, then you can get score.
+TODO
 
 ## Youtube Channel
 https://www.youtube.com/channel/UCiHDXBN2f1rN61Tk3ftWvLg
