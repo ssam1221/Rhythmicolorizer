@@ -1,7 +1,7 @@
 const fs = require(`fs`);
 const xlsx = require(`xlsx`);
 
-const DIFFICULTY = [`Easy`, `Normal`, `Hard`];
+const DIFFICULTY = [`Easy`, `Normal`, `Hard`, `Xtreme`];
 
 const xlsFiles = fs.readdirSync(`./xlsFiles`);
 
@@ -30,7 +30,7 @@ for (const xlsFile of xlsFiles) {
         }
         const CAPITALIZE_DIFFICULITY = difficulty.toUpperCase();
         noteData[CAPITALIZE_DIFFICULITY] = [];
-        let noteList = xlsx.utils.sheet_to_json(workbook.Sheets[difficulty]);
+        const noteList = xlsx.utils.sheet_to_json(workbook.Sheets[difficulty]);
         for (const note of noteList) {
             if (!note.key || !note.timestamp) {
                 continue;

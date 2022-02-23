@@ -1,33 +1,62 @@
 {
-    "Easy": [{
-        "key": "A",
-        "timestamp": 1000
-    }, {
-        "key": "b",
-        "timestamp": 1200
-    }, {
-        "key": "c",
-        "timestamp": 1400
-    }, {
-        "key": "D",
-        "timestamp": 1600
-    }, {
-        "key": "e",
-        "timestamp": 1000
-    }, {
-        "key": "f",
-        "timestamp": 1800
-    }, {
-        "key": "g",
-        "timestamp": 2000
-    }, {
-        "key": "h",
-        "timestamp": 2200
-    }, {
-        "key": "i",
-        "timestamp": 2400
-    }, {
-        "key": "j",
-        "timestamp": 2600
-    }]
+    "EASY": [
+        {
+            "color": "r",
+            "timestamp": 600
+        },
+        {
+            "color": "g",
+            "timestamp": 5400
+        },
+        {
+            "color": "b",
+            "timestamp": 10200
+        },
+        {
+            "color": "w",
+            "timestamp": 15000
+        },
+        {
+            "color": "r",
+            "timestamp": 19800
+        },
+        {
+            "color": "r",
+            "timestamp": 21000
+        },
+        {
+            "color": "r",
+            "timestamp": 22200
+        },
+        {
+            "color": "r",
+            "timestamp": 23400
+        },
+        {
+            "color": "r",
+            "timestamp": 24600
+        },
+        {
+            "color": "g",
+            "timestamp": 29400
+        },
+        {
+            "color": "g",
+            "timestamp": 30600
+        },
+        {
+            "color": "g",
+            "timestamp": 31800
+        },
+        {
+            "color": "g",
+            "timestamp": 33000
+        },
+        {
+            "color": "g",
+            "timestamp": 34200
+        }
+    ],
+    "NORMAL": [],
+    "HARD": []
 }
