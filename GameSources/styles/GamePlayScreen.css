@@ -18,20 +18,28 @@ div#keynotePressedContainer {
     height: 100%;
 }
 
+/* Keynots Container */
+
 div#keynotesContainerBackground {
     position: absolute;
-    width: 100%;
-    height: 640px;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 1%,
+            white 6%,
+            white 13.5%,
+            rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
 }
 
 div#keynotesContainer,
 div.keynotesContainer {
     font-size: 128px;
     position: absolute;
-    left: 0;
-    top: calc(50% - 64px);
-    width: 100%;
-    height: 160px;
+    /* top: calc(50% - 64px); */
+    left: 20%;
+    width: 60%;
+    height: 100%;
 }
 
 div#keynotesContainerBackground {
@@ -45,48 +53,56 @@ div#keynotesContainer {
 }
 
 div.keynotesContainer {
-    position: absolute;
+    /* position: absolute;
     width: 100%;
-    height: 160px;
-    border: 1px solid black;
-    opacity: 0;
-}
-
-div.keynotesContainer#keynotesContainer_0 {
-    top: calc(50% - 320px);
+    height: 160px; */
+    /* border: 1px solid black; */
+    opacity: 0.2;
+    width: 40%;
 }
 
 div.keynotesContainer#keynotesContainer_1 {
-    top: calc(50% - 160px);
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 10%,
+            white 50%,
+            white 90%,
+            rgba(255, 255, 255, 0) 93%);
+    left: 0%;
 }
 
 div.keynotesContainer#keynotesContainer_2 {
-    top: calc(50%);
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 10%,
+            white 50%,
+            white 90%,
+            rgba(255, 255, 255, 0) 93%);
+    left: 60%;
 }
 
-div.keynotesContainer#keynotesContainer_3 {
-    top: calc(50% + 160px);
-}
+/* Display points */
 
 div#pointDisplay {
-    top: 0;
-    height: 100%;
+    position: absolute;
+    left: 20%;
+    top: 40%;
+    width: 60%;
+    height: 20%;
 }
 
 div.pointDisplay {
     position: absolute;
-    width: 100%;
+    width: 50%;
     height: 160px;
     font-size: 64px;
-    text-align: right;
-    line-height: 160px;
-    margin-right: 50px;
-    right: 0%;
+    text-align: center;
 }
 
 div.pointDisplay.pointDisplay_0 {
-    right: 0%;
-    top: calc(50% - 320px);
+    left: 0%;
+}
+
+div.pointDisplay.pointDisplay_1 {
+    right: 60%;
 }
 
 div.pointDisplay.pointDisplay_Perfect {
@@ -106,37 +122,14 @@ div.pointDisplay.pointDisplay_Miss {
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-div.pointDisplay.pointDisplay_1 {
-    right: 0%;
-    top: calc(50% - 160px);
-}
-
-div.pointDisplay.pointDisplay_2 {
-    right: 0%;
-    top: calc(50%);
-}
-
-div.pointDisplay.pointDisplay_3 {
-    right: 0%;
-    top: calc(50% + 160px);
-}
-
-
-
-
-div#keynotesContainerBackground {
-    background: linear-gradient(to right,
-            rgba(255, 255, 255, 0) 1%,
-            white 6%,
-            white 13.5%,
-            rgba(255, 255, 255, 0) 80%);
-    opacity: 0;
-}
+/* Youtube Player */
 
 #youtubeVideoPlayer {
     width: 800px;
     height: 100%;
 }
+
+/* Get Ready Text */
 
 #getReadyText {
     position: absolute;
@@ -159,12 +152,12 @@ div#getReadyText.GetReadyAnimation {
 
 div#keynoteChecker {
     position: absolute;
-    width: 60px;
-    height: 100%;
-    left: 48px;
-    top: 0;
+    width: 80%;
+    height: 30px;
+    left: 10%;
+    top: 90%;
 
-    background: linear-gradient(to bottom,
+    background: linear-gradient(to right,
             rgba(255, 255, 255, 0) 3%,
             white 5%,
             white 90%,
@@ -174,10 +167,20 @@ div#keynoteChecker {
 
 div.keynoteChecker {
     position: absolute;
-    left: 0px;
-    width: 60px;
-    height: 160px;
-    opacity: 0.7;
+    /* left: 0px; */
+    width: 30.2%;
+    /* width: 40%; */
+    height: 30px;
+    /* opacity: 0.7; */
+}
+
+div.keynoteChecker#keynoteChecker_1 {
+    border: 1px solid black;
+    left: 12.3%;
+}
+div.keynoteChecker#keynoteChecker_2 {
+    border: 1px solid black;
+    left: 57.2%;
 }
 
 div.keynoteChecker.NoteScoreAnimation_Perfect {
@@ -196,28 +199,13 @@ div.keynoteChecker.NoteScoreAnimation_Miss {
     animation: NoteScoreAnimation_Miss linear 0.3s;
 }
 
-
-div.keynoteChecker#keynoteChecker_0 {
-    top: calc(50% - 320px);
-}
-
-div.keynoteChecker#keynoteChecker_1 {
-    top: calc(50% - 160px);
-}
-
-div.keynoteChecker#keynoteChecker_2 {
-    top: calc(50%);
-}
-
-div.keynoteChecker#keynoteChecker_3 {
-    top: calc(50% + 160px);
-}
-
 div.MUSIC_NOTE {
     position: absolute;
     left: 0px;
     /* top: calc(50% - 64px); */
-    width: 100%;
+    width: 40%;
+    height: 30px;
+    /* border-radius: 50%; */
     /* height: 128px; */
 }
 
@@ -227,7 +215,6 @@ div.MUSIC_NOTE.showNote {
 }
 
 div.MUSIC_NOTE.showNote.shiftedKey {
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     color: white;
 }
 

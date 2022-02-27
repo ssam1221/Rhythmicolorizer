@@ -135,7 +135,7 @@ export default class BGMPlayer {
         // CUED: 5
 
         async function onPlayerStateChange(event) {
-            console.log(event)
+            // console.log(event)
             if (self.isBGMStart === false) {
                 self.isBGMStart = true;
                 self.player.pauseVideo();

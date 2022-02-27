@@ -68,13 +68,13 @@
 
 @keyframes NoteShow {
     0% {
-        transform: translateX(130vw);
+        transform: translateY(-10vw);
         opacity: 0.5;
     }
 
 
     50% {
-        transform: translateX(50vw);
+        transform: translateY(10vw);
         opacity: 1;
         /* color: black */
     }
@@ -90,7 +90,7 @@
     }
 
     100% {
-        transform: translateX(-30vw);
+        transform: translateY(110vw);
         opacity: 0.2;
     }
 }

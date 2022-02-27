@@ -1,62 +1,77 @@
 {
     "EASY": [
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 600
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 5400
         },
         {
-            "color": "b",
+            "key": "b",
+            "direction": 0,
             "timestamp": 10200
         },
         {
-            "color": "w",
+            "key": "w",
+            "direction": 0,
             "timestamp": 15000
         },
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 19800
         },
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 21000
         },
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 22200
         },
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 23400
         },
         {
-            "color": "r",
+            "key": "r",
+            "direction": 0,
             "timestamp": 24600
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 29400
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 30600
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 31800
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 33000
         },
         {
-            "color": "g",
+            "key": "g",
+            "direction": 0,
             "timestamp": 34200
         }
     ],
     "NORMAL": [],
-    "HARD": []
+    "HARD": [],
+    "XTREME": []
 }

@@ -32,11 +32,12 @@ for (const xlsFile of xlsFiles) {
         noteData[CAPITALIZE_DIFFICULITY] = [];
         const noteList = xlsx.utils.sheet_to_json(workbook.Sheets[difficulty]);
         for (const note of noteList) {
-            if (!note.key || !note.timestamp) {
+            if (!note.key || !note.direction || !note.timestamp) {
                 continue;
             }
             noteData[CAPITALIZE_DIFFICULITY].push({
                 key: note.key,
+                direction: note.direction === `l` ? 0 : 1,
                 timestamp: note.timestamp
             });
         }
