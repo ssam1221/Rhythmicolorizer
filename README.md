@@ -3,7 +3,7 @@ Rhythmicolorizer
 #### Play : https://ssam1221.github.io/Rhythmicolorizer
 
 ### Description
-Typing! Script is a rhythm game based on PC keyboard.
+Rhythmicolorizer is a rhythm game based on PC keyboard.
 
 ### How to play (for test now)
 TODO
