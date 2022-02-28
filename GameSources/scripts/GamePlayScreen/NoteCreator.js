@@ -13,6 +13,15 @@ const debug = new Debug({
 
 export default class NoteCreator {
 
+    static KEYPRESS_STATUS = {
+        r0: false,
+        r0: false,
+        r0: false,
+        r1: false,
+        g1: false,
+        b1: false,
+    }
+
     static isInitialized = false;
 
     static Difficulty = {
@@ -306,16 +315,21 @@ export default class NoteCreator {
     static renderMusicNote(_note) {
         const self = this;
         ((note) => {
-            debug.log(`_note : `, _note)
+            debug.log(`_note : `, note)
             const musicNote = document.getElementById(`musicNote_${this.getCurrentNoteIndex()}`);
             // debug.log(`Note      : [${key}] : Assigned to : ${this.currentNoteIndex}`);
             // musicNote.innerText = note;
             this.setNotePosition(musicNote);
             musicNote.style.backgroundColor = this.COLOR_BY_NOTE_KEY[note.key];
             // debug.log(`Render Music Note : [${key}]`, note);
-            let classAttributes = `showNote`;
-            if (true === this.isShiftedUsedKey(note)) {
-                classAttributes += ` shiftedKey`
+            let classAttributes = [`showNote`];
+            // if (true === this.isShiftedUsedKey(note)) {
+            //     classAttributes += ` shiftedKey`
+            // }
+            if (note.direction === 0) {
+                musicNote.style.left = `0%`;
+            } else if (note.direction === 1) {
+                musicNote.style.left = `60%`;
             }
 
             musicNote.classList.add(`${classAttributes}`);
@@ -328,7 +342,6 @@ export default class NoteCreator {
     }
 
     static keypressNote(_key) {
-
         SFXPlayer.play(`GamePlayScreen/NotePressed.mp3`);
         ((key) => {
             const keypressedNote = document.getElementById(`keypressNote_${this.getCurrentKeyPressNoteIndex()}`);
@@ -416,23 +429,35 @@ export default class NoteCreator {
         }, 1000);
     }
 
+    // this.KEYPRESS_STATUS[key]
+    static setCurrentPressedKey({
+        keyCode,
+        value
+    }) {
+        const info = this.getNoteRenderInfoByKeyCode(keyCode)
+        this.KEYPRESS_STATUS[`${info.color}${info.position}`] = value;
+        debug.log(`setCurrentPressedKey : `, JSON.stringify(this.KEYPRESS_STATUS));
+    }
+
     static checkPressedKeyCorrected(keyCode) {
-        const info = this.getNoteRenderInfoByKeyCode(keyCode);
+        // const info = this.getNoteRenderInfoByKeyCode(keyCode);
         const keypressTimestamp = new Date().getTime() - this.StartTime;
-        debug.log(`checkPressedKeyCorrected() ::: Compare (keyCode, key) : (${keyCode}, ${info.color})`)
-        debug.log(`checkPressedKeyCorrected() ::: Compare (direction, position) : (${this.noteList[this.currentCheckingNoteIndex].direction}, ${info.position})`)
+        // debug.log(`checkPressedKeyCorrected() ::: Compare (keyCode, key) : (${keyCode}, ${info.color})`)
+        // debug.log(`checkPressedKeyCorrected() ::: Compare (direction, position) : (${this.noteList[this.currentCheckingNoteIndex].direction}, ${info.position})`)
         debug.log(`checkPressedKeyCorrected() ::: this.currentCheckingNoteIndex = `, this.currentCheckingNoteIndex)
         debug.log(`checkPressedKeyCorrected() ::: this.noteList[this.currentCheckingNoteIndex].key = `, this.noteList[this.currentCheckingNoteIndex].key)
         debug.log(`checkPressedKeyCorrected() ::: keypressTimestamp = `, keypressTimestamp)
         // debug.log(`Key pressed ${key} (Position : ${this.getNotePositionByKey(key)}) with timestamp : ${keypressTimestamp}`);
         this.updateCurrentCheckingNoteIndex();
-        if ((this.noteList[this.currentCheckingNoteIndex].key === info.color) &&
-            (this.noteList[this.currentCheckingNoteIndex].direction === info.position)) {
+        // if ((this.noteList[this.currentCheckingNoteIndex].key === info.color) &&
+        //     (this.noteList[this.currentCheckingNoteIndex].direction === info.position)) {
+        const targetNote = this.noteList[this.currentCheckingNoteIndex];
+        if ((this.KEYPRESS_STATUS[`${targetNote.key}${targetNote.direction}`] === true)) {
             this.noteList[this.currentCheckingNoteIndex].status = this.NOTE_STATUS.CATCHED;
             const point = this.calculatePoint(this.noteList[this.currentCheckingNoteIndex].timestamp, keypressTimestamp);
             ScoreController.addScore(point);
             this.setNoteCheckerColorByPoint(keyCode, point);
-            debug.log(`Check currentCheckingNoteIndex : `, this.currentCheckingNoteIndex)
+            debug.log(`Check currentCheckingNoteIndex : `, this.currentCheckingNoteIndex);
             document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `hidden`;
             setTimeout(() => {
                 document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `visible`;
@@ -448,11 +473,31 @@ export default class NoteCreator {
 
     static onkeypress(e) {
         if (this.isKeyValid(e.key) === true) {
+            this.setCurrentPressedKey({
+                keyCode: e.key,
+                value: true
+            });
+            debug.log(`keydown : `, this.KEYPRESS_STATUS);
             if (true === BGMPlayer.isGameStart) {
                 if (e.key.length === 1) {
                     this.keypressNote(e.key)
                 }
             }
+        }
+    }
+
+    static onkeyup(e) {
+        if (this.isKeyValid(e.key) === true) {
+            this.setCurrentPressedKey({
+                keyCode: e.key,
+                value: false
+            });
+            debug.log(`Keyup   : `, this.KEYPRESS_STATUS);
+            // if (true === BGMPlayer.isGameStart) {
+            //     if (e.key.length === 1) {
+            //         this.keypressNote(e.key)
+            //     }
+            // }
         }
     }
 }

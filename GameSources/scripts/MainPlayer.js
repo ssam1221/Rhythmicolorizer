@@ -41,24 +41,31 @@ import GamePlayScreenController from "./GamePlayScreenController"
         };
 
         // Test & to load all images, delay 3 seconds
-        await (() => {
-            return new Promise((resolve, reject) => {
-                setTimeout(resolve, 2000);
-            })
-        })();
+        // await (() => {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(resolve, 2000);
+        //     })
+        // })();
 
         LoadingController.hideInitialLoading();
 
-        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
+        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
 
         // Test
         // BGMSelector.playBGMPreview();
         // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
 
         // Game Play Test
-        // document.onclick = async (e) => {
-        //     GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
-        // }
 
+        // Game Play Test
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
+        let clicked = false;
+        document.onclick = async (e) => {
+            if (clicked === false) {
+                clicked = true;
+                // GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
+                GamePlayScreenController.startGameByTitle(`아기 알파카는 오늘도 꿈을 꾸고 있어요`, NoteCreator.Difficulty.NORMAL);
+            }
+        }
     };
 })();

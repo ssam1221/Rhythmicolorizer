@@ -83,9 +83,9 @@ div.keynotesContainer#keynotesContainer_2 {
 
 div#pointDisplay {
     position: absolute;
-    left: 20%;
+    left: 15%;
     top: 40%;
-    width: 60%;
+    width: 70%;
     height: 20%;
 }
 
@@ -102,7 +102,7 @@ div.pointDisplay.pointDisplay_0 {
 }
 
 div.pointDisplay.pointDisplay_1 {
-    right: 60%;
+    left: 50%;
 }
 
 div.pointDisplay.pointDisplay_Perfect {
@@ -212,6 +212,9 @@ div.MUSIC_NOTE {
 div.MUSIC_NOTE.showNote {
     opacity: 0;
     animation: NoteShow linear 2s;
+}
+div.MUSIC_NOTE.Position_Right {
+    left: 60%;
 }
 
 div.MUSIC_NOTE.showNote.shiftedKey {
