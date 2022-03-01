@@ -35,11 +35,18 @@ import GamePlayScreenController from "./GamePlayScreenController"
         KeyboardEventListener.addKeyboardEventListener();
 
         // const bgmReady = awiat BGMPlayer
+
+
+        // Disable mouse left click
+        document.onclick = (event) => {
+            event.preventDefault();
+        }
+
+        // Disable mouse right click
         document.oncontextmenu = (event) => {
-            debug.log(`Right click`);
             event.preventDefault();
         };
-
+        
         // Test & to load all images, delay 3 seconds
         // await (() => {
         //     return new Promise((resolve, reject) => {
@@ -48,6 +55,7 @@ import GamePlayScreenController from "./GamePlayScreenController"
         // })();
 
         LoadingController.hideInitialLoading();
+        await TitleScreenController.initialize();
 
         // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
 
@@ -58,14 +66,15 @@ import GamePlayScreenController from "./GamePlayScreenController"
         // Game Play Test
 
         // Game Play Test
-        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
-        let clicked = false;
-        document.onclick = async (e) => {
-            if (clicked === false) {
-                clicked = true;
-                // GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
-                GamePlayScreenController.startGameByTitle(`아기 알파카는 오늘도 꿈을 꾸고 있어요`, NoteCreator.Difficulty.NORMAL);
-            }
-        }
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
+        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
+        // let clicked = false;
+        // document.onclick = async (e) => {
+        //     if (clicked === false) {
+        //         clicked = true;
+        //         // GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteCreator.Difficulty.HARD);
+        //         GamePlayScreenController.startGameByTitle(`아기 알파카는 오늘도 꿈을 꾸고 있어요`, NoteCreator.Difficulty.NORMAL);
+        //     }
+        // }
     };
 })();

@@ -27,6 +27,9 @@ export default class DOMConatiners {
             GamePlayScreen: null,
             SelectMusicScreen: null,
         },
+        TitleScreenContainer: {
+            YoutubePlayer: null,
+        },
         LoadingScreenContainer: {
             InitialLoading: null,
             PlayLoading: null,
@@ -61,6 +64,7 @@ export default class DOMConatiners {
         for (const mainContainerName in this.MainContainer) {
             this.Containers.Main[mainContainerName] = document.getElementById(mainContainerName);
         }
+        this.Containers.TitleScreenContainer.YoutubePlayerContainer = document.getElementById(`TitleScreenYoutubeVideoContainer`);
         this.Containers.LoadingScreenContainer.InitialLoading = document.getElementById(`InitialLoading`);
         this.Containers.LoadingScreenContainer.PlayLoading = document.getElementById(`PlayLoading`);
         this.Containers.LoadingScreenContainer.InitialLoadingTips = document.getElementById(`InitialLoadingTips`);
