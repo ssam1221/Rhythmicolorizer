@@ -108,6 +108,7 @@ export default class BGMPlayer {
                         prevClassOfkeynotesContainers = DOMConatiners.get().GamePlayScreenContainer.keynotesContainers[0].getAttribute(`class`);
                     DOMConatiners.get().GamePlayScreenContainer.keynoteCheckerContainer.setAttribute(`class`, `${prevClassOfkeynoteChecker} transparentFadeIn`);
                     DOMConatiners.get().GamePlayScreenContainer.Difficulty.style.opacity = 1;
+                    DOMConatiners.get().GamePlayScreenContainer.GameScore.style.opacity = 1;
                     DOMConatiners.get().GamePlayScreenContainer.keynotesContainerBackground.setAttribute(`class`, `${prevClassOfkeynotesContainerBackground} transparentFadeIn`);
                     for (const el of DOMConatiners.get().GamePlayScreenContainer.keynotesContainers) {
                         el.setAttribute(`class`, `${prevClassOfkeynotesContainers} transparentFadeIn`);

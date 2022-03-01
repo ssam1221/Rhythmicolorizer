@@ -31,6 +31,13 @@ export default class NoteCreator {
         XTREME: `XTREME`,
     }
 
+    static DIFFICULTY_COLOR = {
+        EASY: `green`,
+        NORMAL: `blue`,
+        HARD: `yellow`,
+        XTREME: `red`,
+    }
+
     static NoteColor = {
         r: `#FF0000`, // Yellow
         g: `#00FF00`, // Green
@@ -147,7 +154,10 @@ export default class NoteCreator {
             this.noteList[idx].status = this.NOTE_STATUS.IDLE;
         }
         this.currentDifficulty = Difficulty;
-        document.getElementById(`Difficulty`).innerHTML = `Difficulty : ${Difficulty}`;
+        const difficultyTextColor = this.DIFFICULTY_COLOR[Difficulty];
+        document.getElementById(`Difficulty`).style.color = `${difficultyTextColor}`;
+        document.getElementById(`Difficulty`).innerHTML = `${Difficulty}`;
+        // document.getElementById(`Difficulty`).innerHTML = `Difficulty : ${Difficulty}`;
         debug.log(`Notes : `, this.noteList);
     }
 
