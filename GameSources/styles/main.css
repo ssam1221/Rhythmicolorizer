@@ -1,6 +1,7 @@
 * {
     overflow: hidden;
     font-family: Consolas;
+    user-select: none;
 }
 
 body {
@@ -12,6 +13,7 @@ body {
 }
 
 div.MainContainer {
+    cursor: none;
     display: flex;
 
     position: absolute;
