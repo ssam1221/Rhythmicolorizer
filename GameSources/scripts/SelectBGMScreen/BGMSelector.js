@@ -97,11 +97,20 @@ export default class BGMSelector {
         type,
         direction
     }) {
+        debug.log(`Playable : `, this.isCurrentModePlayable());
+        if (this.isCurrentModePlayable() === false) {
+
+        }
+
         document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow`);
         document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow ArrowPressed`);
         setTimeout(() => {
             document.getElementById(`Select${type}Arrow${direction}`).setAttribute(`class`, `SelectMusicScreen ${type}SelectArrow`);
         }, 500);
+    }
+
+    static isCurrentModePlayable() {
+        return this.BGMData[this.selectedMusicIdx].data.noteList[this.getCurrentDifficulty()].length !== 0;
     }
 
     static onBGMSelectChanged({
@@ -111,9 +120,8 @@ export default class BGMSelector {
         debug.log(`Selected title : [${this.selectedMusicIdx}] ${this.BGMData[this.selectedMusicIdx].title}`);
         this.currentRotation = this.BGM_COVERIMAGE_ROTATE_DEGREE * -this.selectedMusicRotationIdx;
         DOMConatiners.get().SelectMusicScreenContainer.CoverImageContainer.style.transform = `translateZ(-500px) perspective(1000px) rotateY(${this.currentRotation}deg)`;
-
         DOMConatiners.get().SelectMusicScreenContainer.BGMSelected.style.backgroundImage = `url('${this.BGMData[this.selectedMusicIdx].coverImage}')`;
-        console.log(DOMConatiners.get().SelectMusicScreenContainer.BGMSelected.style.backgroundImage)
+
         if (true !== isInitial) {
             this.playBGMPreview(this.BGMData[this.selectedMusicIdx].title);
         };
@@ -127,9 +135,17 @@ export default class BGMSelector {
     }
 
     static setTitleAndDifficultyText() {
-        DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.innerHTML =
-            `${this.BGMData[this.selectedMusicIdx].title}<br>` +
-            `${this.currrentDifficulty}`;
+        if (this.isCurrentModePlayable() === true) {
+            DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.innerHTML =
+                `${this.BGMData[this.selectedMusicIdx].title}<br>` +
+                `${this.currrentDifficulty}`;
+        }
+        else {
+            DOMConatiners.get().SelectMusicScreenContainer.SelectedMusicInfoContainer.innerHTML =
+                `${this.BGMData[this.selectedMusicIdx].title}<br>` +
+                `${this.currrentDifficulty}<br>` + 
+                `<span id="notPlayable">Not available yet</span>`;
+        }
     }
 
     static getCurrentDifficulty() {
@@ -270,6 +286,9 @@ export default class BGMSelector {
                 arrowDirection: `Down`
             });
         } else if ((e.key === `Enter`) || (e.key === ` `)) {
+            if (this.isCurrentModePlayable() === false) {
+                return;
+            }
             if (this.isBGMSelected === false) {
                 this.isBGMSelected = true;
                 debug.log(`Selected`);

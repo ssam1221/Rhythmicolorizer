@@ -17,9 +17,11 @@
     0% {
         color: red;
     }
+
     20% {
         color: white;
     }
+
     100% {
         color: white;
     }
@@ -128,11 +130,15 @@ div.SelectMusicScreen#BGMSelected {
     top: 105px;
     width: 390;
     height: 390;
-    background-repeat : no-repeat;
-    background-size : cover;
+    background-repeat: no-repeat;
+    background-size: cover;
     opacity: 0;
 }
 
 div.SelectMusicScreen#BGMSelected.onSelected {
     animation: BGMSelectedZoomIn linear 1s;
+}
+
+span#notPlayable {
+    font-size: 18px;
 }
