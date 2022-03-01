@@ -1,33 +1,6 @@
 {
-    "Easy": [{
-        "key": "A",
-        "timestamp": 1000
-    }, {
-        "key": "b",
-        "timestamp": 1200
-    }, {
-        "key": "c",
-        "timestamp": 1400
-    }, {
-        "key": "D",
-        "timestamp": 1600
-    }, {
-        "key": "e",
-        "timestamp": 1000
-    }, {
-        "key": "f",
-        "timestamp": 1800
-    }, {
-        "key": "g",
-        "timestamp": 2000
-    }, {
-        "key": "h",
-        "timestamp": 2200
-    }, {
-        "key": "i",
-        "timestamp": 2400
-    }, {
-        "key": "j",
-        "timestamp": 2600
-    }]
+    "EASY": [],
+    "NORMAL": [],
+    "HARD": [],
+    "XTREME": []
 }
