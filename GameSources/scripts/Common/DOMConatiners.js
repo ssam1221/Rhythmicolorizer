@@ -111,5 +111,8 @@ export default class DOMConatiners {
             }
             this.Containers.Main[containerName].style.display = `inline-block`;
         }
+        else {
+            debug.error(`Unknown container name : `, containerName);
+        }
     }
 }

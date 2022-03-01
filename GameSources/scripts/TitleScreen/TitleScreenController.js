@@ -1,7 +1,8 @@
+import Debug from "../Common/Debug";
 import BGMSelector from "../SelectBGMScreen/BGMSelector";
 import DOMConatiners from "../Common/DOMConatiners"
 import LoadingController from "../Common/LoadingController";
-import Debug from "../Common/Debug";
+import SFXPlayer from "../Common/SFXPlayer";
 
 const debug = new Debug({
     filename: `TitleScreenController`
@@ -10,7 +11,8 @@ const debug = new Debug({
 export default class TitleScreenController {
 
     static YoutubePlayer;
-
+    static isVideoPlaying = false;
+    static isGameStart = false;
     static initialize() {
         const self = this;
         this.YoutubePlayer = new YT.Player(`TitleScreenYoutubeVideoPlayer`, {
@@ -29,39 +31,44 @@ export default class TitleScreenController {
             }
         });
 
-        // 4. The API will call this function when the video player is ready.
         function onPlayerReady(event) {
             // console.log(`onPlayerReady : `, event);
             self.YoutubePlayer.playVideo();
+            self.isVideoPlaying = true;
         }
     }
 
-
     static onkeyEvent(evt) {
         if (evt) {
-            let youtubeVolume = 100;
-            const volumeInterval = setInterval(() => {
-                this.YoutubePlayer.setVolume(youtubeVolume--);
-                if (youtubeVolume <= 0) {
-                    const youtubePlayerContainer = DOMConatiners.get().TitleScreenContainer.YoutubePlayerContainer;
-                    while (youtubePlayerContainer.firstChild) {
-                        youtubePlayerContainer.removeChild(youtubePlayerContainer.firstChild);
+            if (this.isVideoPlaying === true && this.isGameStart === false) {
+                this.isGameStart = true;
+                SFXPlayer.play(`SelectMusicScreen/bgmSelected.mp3`);
+                let youtubeVolume = 100;
+                const volumeInterval = setInterval(() => {
+                    this.YoutubePlayer.setVolume(youtubeVolume--);
+                    if (youtubeVolume <= 0) {
+                        const youtubePlayerContainer = DOMConatiners.get().TitleScreenContainer.YoutubePlayerContainer;
+                        while (youtubePlayerContainer.firstChild) {
+                            youtubePlayerContainer.removeChild(youtubePlayerContainer.firstChild);
+                        }
+                        clearInterval(volumeInterval);
                     }
-                    clearInterval(volumeInterval);
-                }
-            }, 10);
+                }, 10);
 
-            LoadingController.showPlayLoading();
-            setTimeout(() => {
-                this.YoutubePlayer.stopVideo();
-                DOMConatiners.hideAll();
-            }, 1000);
-            setTimeout(() => {
-                DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
-                BGMSelector.playBGMPreview();
-                LoadingController.hidePlayLoading();
-            }, 2000);
-
+                // LoadingController.showPlayLoading();
+                LoadingController.showInitialLoading();
+                setTimeout(() => {
+                    this.YoutubePlayer.stopVideo();
+                    // DOMConatiners.hideAll();
+                    DOMConatiners.showMainContainer(`LoadingScreen`);
+                }, 1000);
+                setTimeout(() => {
+                    // LoadingController.hidePlayLoading();
+                    LoadingController.hideInitialLoading();
+                    DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
+                    BGMSelector.playBGMPreview();
+                }, 2000);
+            }
         }
     }
 }
