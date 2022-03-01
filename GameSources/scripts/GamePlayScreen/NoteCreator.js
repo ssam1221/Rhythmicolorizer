@@ -429,7 +429,6 @@ export default class NoteCreator {
         }, 1000);
     }
 
-    // this.KEYPRESS_STATUS[key]
     static setCurrentPressedKey({
         keyCode,
         value
@@ -459,9 +458,9 @@ export default class NoteCreator {
             this.setNoteCheckerColorByPoint(keyCode, point);
             debug.log(`Check currentCheckingNoteIndex : `, this.currentCheckingNoteIndex);
             document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `hidden`;
-            setTimeout(() => {
-                document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `visible`;
-            }, 1000);
+            // setTimeout(() => {
+            //     document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`).style.visibility = `visible`;
+            // }, 1000);
             // console.log(this.noteList[this.currentCheckingNoteIndex])
             // console.log(document.getElementById(`musicNote_${this.currentCheckingNoteIndex % 100}`))
         }
