@@ -27,7 +27,7 @@ export default class TitleScreenController {
             },
             events: {
                 onReady: onPlayerReady,
-                // onStateChange: onPlayerStateChange
+                onStateChange: onPlayerStateChange
             }
         });
 
@@ -37,40 +37,52 @@ export default class TitleScreenController {
             self.isVideoPlaying = true;
         }
 
+        function onPlayerStateChange(event) {
+            // Video is ended
+            if (event.data === 0) {
+                self.startGame();
+            }
+            debug.log(`Youtube event : `, event)
+        }
+
         // TODO: If title bgm is ended, go to next
+    }
+
+    static startGame() {
+        if (this.isVideoPlaying === true && this.isGameStart === false) {
+            this.isGameStart = true;
+            SFXPlayer.play(`SelectMusicScreen/bgmSelected.mp3`);
+            let youtubeVolume = 100;
+            const volumeInterval = setInterval(() => {
+                this.YoutubePlayer.setVolume(youtubeVolume--);
+                if (youtubeVolume <= 0) {
+                    const youtubePlayerContainer = DOMConatiners.get().TitleScreenContainer.YoutubePlayerContainer;
+                    while (youtubePlayerContainer.firstChild) {
+                        youtubePlayerContainer.removeChild(youtubePlayerContainer.firstChild);
+                    }
+                    clearInterval(volumeInterval);
+                }
+            }, 10);
+
+            // LoadingController.showPlayLoading();
+            LoadingController.showInitialLoading();
+            setTimeout(() => {
+                this.YoutubePlayer.stopVideo();
+                // DOMConatiners.hideAll();
+                DOMConatiners.showMainContainer(`LoadingScreen`);
+            }, 1000);
+            setTimeout(() => {
+                // LoadingController.hidePlayLoading();
+                LoadingController.hideInitialLoading();
+                DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
+                BGMSelector.playBGMPreview();
+            }, 2000);
+        }
     }
 
     static onkeyEvent(evt) {
         if (evt) {
-            if (this.isVideoPlaying === true && this.isGameStart === false) {
-                this.isGameStart = true;
-                SFXPlayer.play(`SelectMusicScreen/bgmSelected.mp3`);
-                let youtubeVolume = 100;
-                const volumeInterval = setInterval(() => {
-                    this.YoutubePlayer.setVolume(youtubeVolume--);
-                    if (youtubeVolume <= 0) {
-                        const youtubePlayerContainer = DOMConatiners.get().TitleScreenContainer.YoutubePlayerContainer;
-                        while (youtubePlayerContainer.firstChild) {
-                            youtubePlayerContainer.removeChild(youtubePlayerContainer.firstChild);
-                        }
-                        clearInterval(volumeInterval);
-                    }
-                }, 10);
-
-                // LoadingController.showPlayLoading();
-                LoadingController.showInitialLoading();
-                setTimeout(() => {
-                    this.YoutubePlayer.stopVideo();
-                    // DOMConatiners.hideAll();
-                    DOMConatiners.showMainContainer(`LoadingScreen`);
-                }, 1000);
-                setTimeout(() => {
-                    // LoadingController.hidePlayLoading();
-                    LoadingController.hideInitialLoading();
-                    DOMConatiners.showMainContainer(DOMConatiners.MainContainer.SelectMusicScreen);
-                    BGMSelector.playBGMPreview();
-                }, 2000);
-            }
+            this.startGame();
         }
     }
 }
