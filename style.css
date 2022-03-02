@@ -22,14 +22,15 @@ div#copyright {
 div#gameLogo {
     position: absolute;
     left: calc(50vw - 400px);
+    top: calc(50vh - 450px);
     width: 800px;
-    height: auto;
+    height: 50px;
 }
 
 div#gameLogo img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
 }
 
 iframe {
