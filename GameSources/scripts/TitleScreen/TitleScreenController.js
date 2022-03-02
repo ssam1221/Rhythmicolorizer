@@ -36,6 +36,8 @@ export default class TitleScreenController {
             self.YoutubePlayer.playVideo();
             self.isVideoPlaying = true;
         }
+
+        // TODO: If title bgm is ended, go to next
     }
 
     static onkeyEvent(evt) {

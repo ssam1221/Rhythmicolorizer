@@ -1,0 +1,168 @@
+* {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font-family: Consolas;
+}
+
+body {
+    background-color: #222222;
+}
+
+div#copyright {
+    text-align: center;
+    color: white;
+    position: absolute;
+    left: calc(50vw - 400px);
+    top: calc(50vh + 420px);
+    width: 800px;
+    height: auto;
+}
+
+div#gameLogo {
+    position: absolute;
+    left: calc(50vw - 400px);
+    width: 800px;
+    height: auto;
+}
+
+div#gameLogo img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+iframe {
+    display: flex;
+
+    position: absolute;
+    left: calc(50vw - 400px);
+    top: calc(50vh - 400px);
+    width: 800px;
+    height: 800px;
+    border: 5px ridge #888888;
+}
+
+hr {
+    height: 1px;
+    margin: 10px;
+    background-color: #dddddd;
+    border: none;
+}
+
+div#howtoplay {
+    text-align: center;
+    border: 5px ridge #222222;
+    position: absolute;
+    left: calc(50vw + 410px);
+    top: calc(50vh - 400px);
+    width: 200px;
+    height: 800px;
+    background-color: #999999;
+}
+
+div.titleText {
+    font-size: 24px;
+}
+
+div.subtitleText {
+    font-size: 18px;
+}
+
+div#keySettings {
+    display: flex;
+}
+
+table {
+    margin-left: 10px;
+    width: 90%;
+    border: 1px solid black;
+}
+
+table th,
+table td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+td.tdHidden {
+    border: 0px;
+}
+
+div.colorCircle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    mix-blend-mode: lighten;
+}
+
+div#colorCircleContainer {
+    position: relative;
+    width: 200px;
+    height: 180px;
+}
+
+div#colorCircle {
+    background-color: black;
+    position: absolute;
+    display: block;
+    left: 20px;
+    top: 10px;
+    width: 160px;
+    height: 160px;
+}
+
+div#colorCircle>div.colorCircle#colorR {
+    position: inherit;
+    left: 15px;
+    top: 15px;
+    background-color: #FF0000;
+}
+
+div#colorCircle>div.colorCircle#colorG {
+    position: inherit;
+    left: 65px;
+    top: 15px;
+    background-color: #00FF00;
+}
+
+div#colorCircle>div.colorCircle#colorB {
+    position: inherit;
+    left: 40px;
+    top: 65px;
+    background-color: #0000FF;
+}
+
+td.td_r {
+    background-color: #FF0000;
+}
+
+td.td_g {
+    background-color: #00FF00;
+}
+
+td.td_b {
+    background-color: #0000FF;
+}
+
+td.td_y {
+    background-color: #FFFF00;
+}
+
+td.td_m {
+    background-color: #FF00FF;
+}
+
+td.td_c {
+    background-color: #00FFFF;
+}
+
+td.td_w {
+    background-color: #FFFFFF;
+}
+
+a,
+a:visited {
+    color: black;
+    text-decoration: none;
+}

@@ -6,7 +6,7 @@
     <meta property="og:title" content="Rhythmicolorizer">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://ssam1221.github.io/Rhythmicolorizer/Rhythmicolorizer.png">
-    <meta property="og:description" content="Rhythmicolorizer is a rhythm game based on PC keyboard.">
+    <meta property="og:description" content="Gets rhythmic with color!">
 
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -25,37 +25,135 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <style>
-        * {
-            border: 0;
-            padding: 0;
-            margin: 0;
-        }
 
-        body {
-            background-color: #222222;
-        }
+    <link rel="stylesheet" href="./style.css">
 
-        iframe {
-            display: flex;
-
-            position: absolute;
-            left: calc(50vw - 400px);
-            top: calc(50vh - 400px);
-            width: 800px;
-            height: 800px;
-            border: 5px ridge #888888;
-        }
-    </style>
+    <script src="rootScript.js"></script>
 </head>
 
 <body>
+    <div id="gameLogo">
+        <img src="./RhythmicolorizerTransparent.png">
+    </div>
     <iframe id="gameplay" src='./GameSources/index.html'></iframe>
+    <div id="howtoplay">
+        <hr />
+        <div id="howtoPlayTitle" class="titleText">How to Play</div>
+        <hr />
+        <br>
+        <div class="subtitleText">Key Settings</div>
+        <div>Arrow/Enter : Select</div>
+        <div id="keySettings">
+            <table id="keySettingsTable">
+                <tr>
+                    <td id="keyPress_Escape" colspan=3>ESC</td>
+                    <td class="tdHidden"></td>
+                    <td id="keyPress_ArrowUp">&#9650;</td>
+                    <td class="tdHidden"></td>
+                </tr>
+                <tr>
+                    <td id="keyPress_Enter" colspan=3>Enter</td>
+                    <td id="keyPress_ArrowLeft">&#9668;</td>
+                    <td id="keyPress_ArrowDown">&#9660;</td>
+                    <td id="keyPress_ArrowRight">&#9658;</td>
+                </tr>
+                <tr>
+                    <th colspan=3>Left Side</th>
+                    <th colspan=3>Right Side</th>
+                </tr>
+                <tr>
+                    <th>R</th>
+                    <th>G</th>
+                    <th>B</th>
+                    <th>R</th>
+                    <th>G</th>
+                    <th>B</th>
+                </tr>
+                <tr>
+                    <td id="keyPress_0">a</td>
+                    <td id="keyPress_1">s</td>
+                    <td id="keyPress_2">d</td>
+                    <td id="keyPress_3">l</td>
+                    <td id="keyPress_4">;</td>
+                    <td id="keyPress_5">'</td>
+                </tr>
+
+            </table>
+        </div>
+        <br>
+        <hr />
+        <div class="subtitleText">Color Blending</div>
+        <div id="colorCircleContainer">
+            <div id="colorCircle">
+                <div class="colorCircle" id="colorR"></div>
+                <div class="colorCircle" id="colorG"></div>
+                <div class="colorCircle" id="colorB"></div>
+            </div>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>R</th>
+                    <th>G</th>
+                    <th>B</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td class="td_r">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="td_r">Red</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td class="td_g">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="td_g">Blue</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="td_b">&nbsp;</td>
+                    <td class="td_b">Blue</td>
+                </tr>
+                <tr>
+                    <td class="td_r">&nbsp;</td>
+                    <td class="td_g">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="td_y">Yellow</td>
+                </tr>
+                <tr>
+                    <td class="td_r">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="td_b">&nbsp;</td>
+                    <td class="td_m">Magenta</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td class="td_g">&nbsp;</td>
+                    <td class="td_b">&nbsp;</td>
+                    <td class="td_c">Cyan</td>
+                </tr>
+                <tr>
+                    <td class="td_r">&nbsp;</td>
+                    <td class="td_g">&nbsp;</td>
+                    <td class="td_b">&nbsp;</td>
+                    <td class="td_w">White</td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <hr />
+
+        <div class="subtitleText">External links</div>
+        <div><a href="https://www.youtube.com/channel/UCiHDXBN2f1rN61Tk3ftWvLg" target="blank">Youtube Channel</a></div>
+        <div><a href="https://soundcloud.com/junyoung-park-587292459/tracks" target="blank">SoundCloud</a></div>
+        <div><a href="https://drive.google.com/drive/folders/1--ttUxwlfPArOX0QJBqZqIGrjelx-5cU" target="blank">Download
+                MP3</a></div>
+
+        <hr />
+    </div>
+    <div id="copyright">Copyright 2022. JayY. All rights reserved.</div>
 </body>
-<script>
-    window.onload = () => {
-        document.getElementById(`gameplay`).focus();
-    }
-</script>
 
 </html>

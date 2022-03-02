@@ -7,7 +7,10 @@ export default class KeyboardEventListener {
     static addKeyboardEventListener() {
         document.addEventListener(`keydown`, (e) => {
             // console.log(`addKeyboardEventListener : `, e)
-
+            window.parent.keyPressHandler({
+                event: `keydown`,
+                key: e.key
+            });
             switch (DOMConatiners.getCurrentMainContainerName()) {
                 case ``:
                     break;
@@ -30,6 +33,10 @@ export default class KeyboardEventListener {
 
         document.addEventListener(`keyup`, (e) => {
             // console.log(`addKeyboardEventListener : `, e)
+            window.parent.keyPressHandler({
+                event: `keyup`,
+                key: e.key
+            });
 
             switch (DOMConatiners.getCurrentMainContainerName()) {
                 case ``:
