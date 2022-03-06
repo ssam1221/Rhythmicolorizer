@@ -173,29 +173,194 @@
             "timestamp": 24600
         },
         {
-            "key": "r",
+            "key": "b",
             "direction": 0,
             "timestamp": 29400
         },
         {
-            "key": "g",
+            "key": "b",
+            "direction": 1,
+            "timestamp": 29400
+        },
+        {
+            "key": "r",
             "direction": 0,
             "timestamp": 30600
         },
         {
-            "key": "g",
+            "key": "r",
+            "direction": 1,
+            "timestamp": 30600
+        },
+        {
+            "key": "b",
             "direction": 0,
+            "timestamp": 31800
+        },
+        {
+            "key": "b",
+            "direction": 1,
             "timestamp": 31800
         },
         {
             "key": "g",
             "direction": 0,
+            "timestamp": 32400
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 32400
+        },
+        {
+            "key": "r",
+            "direction": 0,
+            "timestamp": 33000
+        },
+        {
+            "key": "r",
+            "direction": 1,
             "timestamp": 33000
         },
         {
             "key": "g",
             "direction": 0,
+            "timestamp": 33600
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 33600
+        },
+        {
+            "key": "m",
+            "direction": 0,
             "timestamp": 34200
+        },
+        {
+            "key": "m",
+            "direction": 1,
+            "timestamp": 34200
+        },
+        {
+            "key": "y",
+            "direction": 0,
+            "timestamp": 39000
+        },
+        {
+            "key": "c",
+            "direction": 1,
+            "timestamp": 39520
+        },
+        {
+            "key": "r",
+            "direction": 0,
+            "timestamp": 40200
+        },
+        {
+            "key": "b",
+            "direction": 1,
+            "timestamp": 40800
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 41400
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 42000
+        },
+        {
+            "key": "r",
+            "direction": 0,
+            "timestamp": 42600
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 42900
+        },
+        {
+            "key": "b",
+            "direction": 0,
+            "timestamp": 43200
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 43500
+        },
+        {
+            "key": "r",
+            "direction": 0,
+            "timestamp": 43800
+        },
+        {
+            "key": "b",
+            "direction": 1,
+            "timestamp": 44400
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 45000
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 45600
+        },
+        {
+            "key": "b",
+            "direction": 0,
+            "timestamp": 46200
+        },
+        {
+            "key": "r",
+            "direction": 1,
+            "timestamp": 46800
+        },
+        {
+            "key": "b",
+            "direction": 1,
+            "timestamp": 47400
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 47700
+        },
+        {
+            "key": "r",
+            "direction": 1,
+            "timestamp": 48000
+        },
+        {
+            "key": "g",
+            "direction": 1,
+            "timestamp": 48300
+        },
+        {
+            "key": "b",
+            "direction": 0,
+            "timestamp": 57000
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 57300
+        },
+        {
+            "key": "r",
+            "direction": 0,
+            "timestamp": 57600
+        },
+        {
+            "key": "g",
+            "direction": 0,
+            "timestamp": 57900
         }
     ],
     "HARD": [
