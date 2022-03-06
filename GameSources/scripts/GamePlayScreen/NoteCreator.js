@@ -15,11 +15,28 @@ export default class NoteCreator {
 
     static KEYPRESS_STATUS = {
         r0: false,
-        r0: false,
-        r0: false,
+        g0: false,
+        b0: false,
         r1: false,
         g1: false,
         b1: false,
+    }
+
+    static KEYPRESS_COLOR_STATUS = {
+        r0: false,
+        g0: false,
+        b0: false,
+        c0: false,
+        m0: false,
+        y0: false,
+        w0: false,
+        r1: false,
+        g1: false,
+        b1: false,
+        c1: false,
+        m1: false,
+        y1: false,
+        w1: false,
     }
 
     static isInitialized = false;
@@ -422,10 +439,10 @@ export default class NoteCreator {
 
     static calculatePoint(noteTimestamp, keypressTimestamp) {
         debug.log(`calculatePoint() : ${keypressTimestamp} - ${noteTimestamp}`);
-        const diff = Math.abs(keypressTimestamp - noteTimestamp) - this.NOTE_PRESS_DIFF;
+        const diff = Math.abs(Math.abs(keypressTimestamp - noteTimestamp) - this.NOTE_PRESS_DIFF);
         debug.log(`calculatePoint() diff = : ${diff},  this.NOTE_PRESS_DIFF : ${this.NOTE_PRESS_DIFF}`);
         for (const point in this.PointCheck) {
-            if (Math.abs(diff) < this.PointCheck[point]) {
+            if (diff < this.PointCheck[point]) {
                 // console.log(`CHECKED ::: ${point}`);
                 return point;
             }
@@ -453,18 +470,47 @@ export default class NoteCreator {
         }, 1000);
     }
 
+
+    static convertPressedKeyToColor() {
+        for (const idx in [0, 1]) {
+            // Only 1 key is pressed, RGB works
+            this.KEYPRESS_COLOR_STATUS[`r${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
+            this.KEYPRESS_COLOR_STATUS[`g${idx}`] = (!this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
+            this.KEYPRESS_COLOR_STATUS[`b${idx}`] = (!this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
+            
+            // Only 2 keys are exactly pressed, Yellow/Magenta/Cyan works
+            this.KEYPRESS_COLOR_STATUS[`y${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
+            this.KEYPRESS_COLOR_STATUS[`m${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
+            this.KEYPRESS_COLOR_STATUS[`c${idx}`] = (!this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
+
+            // All 3 keys are pressed, White works
+            this.KEYPRESS_COLOR_STATUS[`w${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
+      }
+    }
+
     static setCurrentPressedKey({
         keyCode,
         value
     }) {
         const self = this;
-        const info = this.getNoteRenderInfoByKeyCode(keyCode)
+        const info = this.getNoteRenderInfoByKeyCode(keyCode);
+
         this.KEYPRESS_STATUS[`${info.color}${info.position}`] = value;
+        this.convertPressedKeyToColor();
+
+        // Just for debugging functions
         function k(cp) {
             return self.KEYPRESS_STATUS[`${cp}`] === true ? `O` : `_`;
         }
+
+        function c(cp) {
+            return self.KEYPRESS_COLOR_STATUS[`${cp}`] === true ? `O` : `_`;
+        }
         debug.log(`setCurrentPressedKey : R G B | R G B`);
         debug.log(`setCurrentPressedKey : ${k('r0')} ${k('g0')} ${k('b0')} | ${k('r1')} ${k('g1')} ${k('b1')}`);
+        debug.log(`setCurrentPressedKey : Y M C W | Y M C W`);
+        debug.log(`setCurrentPressedKey : ${c('y0')} ${c('m0')} ${c('c0')} ${c('w0')} | ${c('y1')} ${c('m1')} ${c('c1')} ${c('w1')}`);
+        
     }
 
     static checkPressedKeyCorrected(keyCode) {
@@ -480,7 +526,7 @@ export default class NoteCreator {
         // if ((this.noteList[this.currentCheckingNoteIndex].key === info.color) &&
         //     (this.noteList[this.currentCheckingNoteIndex].direction === info.position)) {
         const targetNote = this.noteList[position][this.currentCheckingNoteIndex[position]];
-        if ((this.KEYPRESS_STATUS[`${targetNote.key}${targetNote.direction}`] === true)) {
+        if ((this.KEYPRESS_COLOR_STATUS[`${targetNote.key}${targetNote.direction}`] === true)) {
             targetNote.status = this.NOTE_STATUS.CATCHED;
             const point = this.calculatePoint(targetNote.timestamp, keypressTimestamp);
             ScoreController.addScore(point);
@@ -505,7 +551,6 @@ export default class NoteCreator {
                 keyCode: e.key,
                 value: true
             });
-            // debug.log(`keydown : `, this.KEYPRESS_STATUS);
             if (true === BGMPlayer.isGameStart) {
                 if (e.key.length === 1) {
                     this.keypressNote(e.key)
@@ -520,7 +565,6 @@ export default class NoteCreator {
                 keyCode: e.key,
                 value: false
             });
-            // debug.log(`Keyup   : `, this.KEYPRESS_STATUS);
             // if (true === BGMPlayer.isGameStart) {
             //     if (e.key.length === 1) {
             //         this.keypressNote(e.key)

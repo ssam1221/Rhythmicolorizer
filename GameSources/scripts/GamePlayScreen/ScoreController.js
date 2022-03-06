@@ -33,7 +33,7 @@ export default class ScoreController {
 
     static addScore(point) {
         this.scoreSum += this.scorePerNote * this.SCORE_OF_POINT[point];
-        debug.log(`Update Score :: ${this.getFormattedScore()}`)
+        // debug.log(`Update Score :: ${this.getFormattedScore()}`);
         DOMConatiners.get().GamePlayScreenContainer.GameScore.innerText = this.getFormattedScore();
         if ((point === `Perfect`) || (point === `Good`)) {
             this.ComboCount++;
