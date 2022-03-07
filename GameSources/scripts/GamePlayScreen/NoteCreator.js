@@ -129,6 +129,12 @@ export default class NoteCreator {
         "l;\'": 1
     }
 
+    static NOTE_POSITION = {
+        LEFT: 0,
+        RIGHT: 1,
+        BOTH: 2
+    }
+
     // static NOTE_POSITION = {
     //     '`1234567890-=\\~!@#$%^&*()_+|': 0,
     //     'qwertyuiop[]QWERTYUIOP{}': 1,
@@ -175,7 +181,18 @@ export default class NoteCreator {
         for (let idx = 0; idx < BGMDatabase.getDataByTitle(bgmTitle).data.noteList[Difficulty].length; idx++) {
             const note = BGMDatabase.getDataByTitle(bgmTitle).data.noteList[Difficulty][idx];
             note.status = this.NOTE_STATUS.IDLE;
-            this.noteList[note.direction].push(note);
+
+            // Both
+            if (note.direction === this.NOTE_POSITION.BOTH) {
+                const newLeftNote = structuredClone(note);
+                const newRightNote = structuredClone(note);
+                newLeftNote.direction = this.NOTE_POSITION.LEFT;
+                newRightNote.direction = this.NOTE_POSITION.RIGHT;
+                this.noteList[this.NOTE_POSITION.LEFT].push(newLeftNote);
+                this.noteList[this.NOTE_POSITION.RIGHT].push(newRightNote);
+            } else {
+                this.noteList[note.direction].push(note);
+            }
             // this.noteList[note.direction][idx].status = this.NOTE_STATUS.IDLE;
         }
         this.currentDifficulty = Difficulty;
@@ -477,7 +494,7 @@ export default class NoteCreator {
             this.KEYPRESS_COLOR_STATUS[`r${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
             this.KEYPRESS_COLOR_STATUS[`g${idx}`] = (!this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
             this.KEYPRESS_COLOR_STATUS[`b${idx}`] = (!this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
-            
+
             // Only 2 keys are exactly pressed, Yellow/Magenta/Cyan works
             this.KEYPRESS_COLOR_STATUS[`y${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && !this.KEYPRESS_STATUS[`b${idx}`]);
             this.KEYPRESS_COLOR_STATUS[`m${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && !this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
@@ -485,7 +502,7 @@ export default class NoteCreator {
 
             // All 3 keys are pressed, White works
             this.KEYPRESS_COLOR_STATUS[`w${idx}`] = (this.KEYPRESS_STATUS[`r${idx}`] && this.KEYPRESS_STATUS[`g${idx}`] && this.KEYPRESS_STATUS[`b${idx}`]);
-      }
+        }
     }
 
     static setCurrentPressedKey({
@@ -510,7 +527,7 @@ export default class NoteCreator {
         debug.log(`setCurrentPressedKey : ${k('r0')} ${k('g0')} ${k('b0')} | ${k('r1')} ${k('g1')} ${k('b1')}`);
         debug.log(`setCurrentPressedKey : Y M C W | Y M C W`);
         debug.log(`setCurrentPressedKey : ${c('y0')} ${c('m0')} ${c('c0')} ${c('w0')} | ${c('y1')} ${c('m1')} ${c('c1')} ${c('w1')}`);
-        
+
     }
 
     static checkPressedKeyCorrected(keyCode) {

@@ -1,3 +1,6 @@
+const {
+    dir
+} = require("console");
 const fs = require(`fs`);
 const xlsx = require(`xlsx`);
 
@@ -35,9 +38,22 @@ for (const xlsFile of xlsFiles) {
             if (!note.key || !note.direction || !note.timestamp) {
                 continue;
             }
+            let direction = 0;
+            switch (note.direction) {
+                case `l`:
+                    direction = 0;
+                    break;
+                case `r`:
+                    direction = 1;
+                    break;
+                case `b`:
+                    direction = 2;
+                    break;
+            }
+
             noteData[CAPITALIZE_DIFFICULITY].push({
                 key: note.key,
-                direction: note.direction === `l` ? 0 : 1,
+                direction: direction,
                 timestamp: note.timestamp
             });
         }

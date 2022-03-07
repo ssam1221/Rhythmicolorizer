@@ -22,8 +22,13 @@ export default class ScoreController {
     static scoreSum = 0;
 
     static initialize(noteList) {
+        debug.log(noteList)
+        debug.log(noteList)
+        debug.log(noteList)
+        debug.log(noteList)
         this.scoreSum = 0;
-        this.scorePerNote = this.PERFECT_SCORE / noteList.length;
+        const totalNoteList = noteList[0].length + noteList[1].length
+        this.scorePerNote = this.PERFECT_SCORE / totalNoteList;
         DOMConatiners.get().GamePlayScreenContainer.GameScore.innerText = this.getFormattedScore();
     }
 
