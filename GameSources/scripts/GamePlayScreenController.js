@@ -1,5 +1,6 @@
 import BGMPlayer from "./GamePlayScreen/BGMPlayer";
-import NoteCreator from "./GamePlayScreen/NoteCreator";
+import GamePlayController from "./GamePlayScreen/GamePlayController";
+import NoteRenderController from "./GamePlayScreen/NoteRenderController";
 
 export default class GamePlayScreenController {
 
@@ -9,7 +10,7 @@ export default class GamePlayScreenController {
             payload
         }) => {
             if (status === `GameReady`) {
-                NoteCreator.start(title, difficulty);
+                GamePlayController.start(title, difficulty);
                 payload.play();
             } else if (status === `GameCompleted`) {}
         });

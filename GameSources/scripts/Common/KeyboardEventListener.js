@@ -1,9 +1,11 @@
 import TitleScreenController from "../TitleScreen/TitleScreenController";
 import BGMSelector from "../SelectBGMScreen/BGMSelector";
 import DOMConatiners from "./DOMConatiners";
-import NoteCreator from "../GamePlayScreen/NoteCreator";
+import GamePlayController from "../GamePlayScreen/GamePlayController";
+import NoteRenderController from "../GamePlayScreen/NoteRenderController";
 
 export default class KeyboardEventListener {
+
     static addKeyboardEventListener() {
         document.addEventListener(`keydown`, (e) => {
             // console.log(`addKeyboardEventListener : `, e)
@@ -24,8 +26,9 @@ export default class KeyboardEventListener {
                     BGMSelector.onBGMSelectorKeyPressed(e);
                     break;
                 case DOMConatiners.MainContainer.GamePlayScreen:
+                    // Do not allow long press
                     if (!e.repeat) {
-                        NoteCreator.onkeypress(e);
+                        GamePlayController.onkeypress(e);
                     }
                     break;
             }
@@ -51,7 +54,7 @@ export default class KeyboardEventListener {
                     //     BGMSelector.onBGMSelectorKeyPressed(e);
                     //     break;
                 case DOMConatiners.MainContainer.GamePlayScreen:
-                    NoteCreator.onkeyup(e);
+                    GamePlayController.onkeyup(e);
                     break;
             }
         });

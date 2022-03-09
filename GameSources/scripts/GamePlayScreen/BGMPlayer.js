@@ -1,6 +1,5 @@
 import BGMDatabase from "../BGMDatabase";
 import DOMConatiners from "../Common/DOMConatiners"
-import NoteCreator from "./NoteCreator";
 import SFXPlayer from "../Common/SFXPlayer";
 import Debug from "../Common/Debug";
 
@@ -143,7 +142,7 @@ export default class BGMPlayer {
                 await countdown();
                 debug.log(`self.isBGMStart `, self.isBGMStart);
                 self.isGameStart = true;
-                // NoteCreator.start();
+                // NoteRenderController.start();
                 // console.log(`onPlayerStateChange `, event)
                 // if (event.data === YT.PlayerState.PLAYING) {
                 // setTimeout(stopVideo, 6000);

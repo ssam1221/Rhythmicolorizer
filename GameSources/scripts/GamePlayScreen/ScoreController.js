@@ -1,5 +1,6 @@
 import Debug from "../Common/Debug";
 import DOMConatiners from "../Common/DOMConatiners"
+import GamePlayController from "./GamePlayController";
 
 const debug = new Debug({
     filename: `ScoreController`
@@ -13,6 +14,13 @@ export default class ScoreController {
         Good: 0.8,
         Bad: 0.3,
         Miss: 0
+    }
+
+    static PointCheck = {
+        Perfect: 15,
+        Good: 30,
+        Bad: 50,
+        Miss: 99999
     }
 
     static ComboCount = 0;
@@ -34,6 +42,18 @@ export default class ScoreController {
 
     static getFormattedScore() {
         return (`0000000${this.scoreSum.toFixed(0)}`).substr(-7);
+    }
+
+    static calculatePoint(noteTimestamp, keypressTimestamp) {
+        debug.log(`calculatePoint() : ${keypressTimestamp} - ${noteTimestamp}`);
+        const diff = Math.abs(Math.abs(keypressTimestamp - noteTimestamp) - GamePlayController.NOTE_PRESS_DIFF);
+        debug.log(`calculatePoint() diff = : ${diff},  this.NOTE_PRESS_DIFF : ${GamePlayController.NOTE_PRESS_DIFF}`);
+        for (const point in this.PointCheck) {
+            if (diff < this.PointCheck[point]) {
+                // console.log(`CHECKED ::: ${point}`);
+                return point;
+            }
+        }
     }
 
     static addScore(point) {
