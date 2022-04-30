@@ -153,8 +153,8 @@ div#getReadyText.GetReadyAnimation {
 div#keynoteChecker {
     position: absolute;
     width: 80%;
-    height: 30px;
-    left: 10%;
+    height: 50px;
+    left: 9%;
     top: 90%;
 
     background: linear-gradient(to right,
@@ -172,18 +172,23 @@ div.keynoteChecker {
     /* width: 40%; */
     height: 30px;
     /* opacity: 0.7; */
+    border: 10px solid black;
 }
 
 div.keynoteChecker#keynoteChecker_1 {
-    border: 1px solid black;
+    opacity: 0;
     left: 12.3%;
 }
 div.keynoteChecker#keynoteChecker_2 {
-    border: 1px solid black;
+    opacity: 0;
     left: 57.2%;
 }
 
-div.keynoteChecker.NoteScoreAnimation_Perfect {
+div.keynoteChecker.keyPressAnimation {
+    animation: keyPressAnimation linear 0.3s;
+}
+
+/* div.keynoteChecker.NoteScoreAnimation_Perfect {
     animation: NoteScoreAnimation_Perfect linear 0.3s;
 }
 
@@ -197,7 +202,7 @@ div.keynoteChecker.NoteScoreAnimation_Bad {
 
 div.keynoteChecker.NoteScoreAnimation_Miss {
     animation: NoteScoreAnimation_Miss linear 0.3s;
-}
+} */
 
 div.MUSIC_NOTE {
     position: absolute;
@@ -229,7 +234,7 @@ div.PRESSED_NOTE {
     width: 100px;
     height: 20%;
     transform-origin: center;
-    border: black;
+    border: black solid 30px;
     text-align: center;
 }
 

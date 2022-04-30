@@ -115,6 +115,7 @@ export default class GamePlayController {
         // if ((NoteRenderController.getNotList()[this.currentCheckingNoteIndex].key === info.color) &&
         //     (NoteRenderController.getNotList()[this.currentCheckingNoteIndex].direction === info.position)) {
         const targetNote = NoteRenderController.getNotList()[position][this.currentCheckingNoteIndex[position]];
+
         if ((this.KEYPRESS_COLOR_STATUS[`${targetNote.key}${targetNote.direction}`] === true)) {
             targetNote.status = this.NOTE_STATUS.CATCHED;
             const point = ScoreController.calculatePoint(targetNote.timestamp, keypressTimestamp);
@@ -173,18 +174,21 @@ export default class GamePlayController {
 
     static keypressNote(_key) {
         SFXPlayer.play(`GamePlayScreen/NotePressed.mp3`);
+        const self = this;
         ((key) => {
-            const keypressedNote = NoteRenderController.getKeyPressNoteByIndex(NoteRenderController.getCurrentKeyPressNoteIndex());
+            const info = this.getNoteInfoByKeyCode(_key);
+            const keypressedNote = NoteRenderController.getCurrentKeyPressNote();
             // debug.log(`keypressNote : [${key}] : Assigned to : ${this.currentKeyPressNoteIndex}`);
-            keypressedNote.innerText = key;
+            // keypressedNote.innerText = key;
             NoteRenderController.setNotePosition(keypressedNote);
-
-            keypressedNote.classList.add([`${this.PRESSED_CLASS_NAME}`, `showNote`]);
+            NoteRenderController.renderNoteCheckerOnKeyPress(self.KEYPRESS_COLOR_STATUS, info.position);
+            keypressedNote.style.backgroundColor = ``;
+            keypressedNote.classList.add([`PRESSED_NOTE`, `showNote`]);
             this.checkPressedKeyCorrected(key);
             setTimeout(() => {
-                keypressedNote.classList.remove([`${this.PRESSED_CLASS_NAME}`, `showNote`]);
-                keypressedNote.innerText = ``;
-            }, 1000)
+                keypressedNote.classList.remove([`PRESSED_NOTE`, `showNote`]);
+                // keypressedNote.innerText = ``;
+            }, 10000)
 
         })(_key);
     }

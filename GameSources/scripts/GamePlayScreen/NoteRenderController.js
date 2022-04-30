@@ -1,4 +1,3 @@
-
 /**
  * @class NoteRenderController
  * @description Only manage rendering notes (and other layout)
@@ -112,6 +111,10 @@ export default class NoteRenderController {
 
     static getCurrentMusicNote() {
         return this.getMusicNoteByIndex(this.getCurrentRenderingNoteIndex());
+    }
+
+    static getCurrentKeyPressNote() {
+        return this.getKeyPressNoteByIndex(this.getCurrentKeyPressNoteIndex());
     }
 
     static hideMusicNoteByIndex(index) {
@@ -270,24 +273,49 @@ export default class NoteRenderController {
         })(_pointMatchedEl);
     }
 
+    static renderNoteCheckerOnKeyPress(colorStatus, position) {
+        debug.log(`####`, colorStatus, position);
+
+        let borderColorHexValue = null;
+        const checkerElement = DOMConatiners.Containers.GamePlayScreenContainer.keynoteCheckers[position]
+
+        for (const colorIndex in colorStatus) {
+            const colorIndexPosition = colorIndex[1];
+            if ((colorStatus[colorIndex] === true) && (colorIndexPosition === `${position}`)) {
+                const color = colorIndex[0];
+                borderColorHexValue = this.COLOR_BY_NOTE_KEY[color];
+                break;
+            }
+        }
+        debug.log(`#### color, position :: `, borderColorHexValue, position);
+        checkerElement.style.borderColor = `${borderColorHexValue}`;
+
+        checkerElement.classList.remove(`keyPressAnimation`);
+        checkerElement.classList.add(`keyPressAnimation`);
+
+        // setTimeout(() => {
+        //     checkerElement.classList.remove(`keyPressAnimation`);
+        // }, 300);
+    }
+
     static setNoteCheckerColorByPoint(key, point) {
         debug.log(`setNoteCheckerColorByPoint(${key}, ${point})`);
         const noteRenderInfo = this.getNoteRenderInfoByKeyCode(key);
         const pos = noteRenderInfo.position;
         debug.log(`setNoteCheckerColorByPoint : `, noteRenderInfo)
-        const checkerEl = DOMConatiners.Containers.GamePlayScreenContainer.keynoteCheckers[pos];
+        const checkerElement = DOMConatiners.Containers.GamePlayScreenContainer.keynoteCheckers[pos];
         // debug.log(`Checking element : `, checkerEl);
         switch (point) {
             case `Perfect`:
             case `Good`:
             case `Bad`:
             case `Miss`:
-                checkerEl.classList.add(`NoteScoreAnimation_${point}`);
+                checkerElement.classList.add(`NoteScoreAnimation_${point}`);
                 this.showPointMatched(point, pos);
                 break;
         }
         setTimeout(() => {
-            checkerEl.classList.remove(`NoteScoreAnimation_${point}`);
+            checkerElement.classList.remove(`NoteScoreAnimation_${point}`);
         }, 1000);
     }
 }

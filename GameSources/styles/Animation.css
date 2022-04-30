@@ -18,50 +18,52 @@
     }
 }
 
+@keyframes keyPressAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes NoteScoreAnimation_Perfect {
     0% {
-        transform: scale(6.0);
         background-color: green;
     }
 
     100% {
-        transform: scale(1.0);
         background-color: transparent;
     }
 }
 
 @keyframes NoteScoreAnimation_Good {
     0% {
-        transform: scale(6.0);
         background-color: blue;
     }
 
     100% {
-        transform: scale(1.0);
         background-color: transparent;
     }
 }
 
 @keyframes NoteScoreAnimation_Bad {
     0% {
-        transform: scale(6.0);
         background-color: red;
     }
 
     100% {
-        transform: scale(1.0);
         background-color: transparent;
     }
 }
 
 @keyframes NoteScoreAnimation_Miss {
     0% {
-        transform: scale(6.0);
         background-color: transparent;
     }
 
     100% {
-        transform: scale(1.0);
         background-color: transparent;
     }
 }
@@ -97,20 +99,20 @@
 
 @keyframes PressedNoteShow {
     0% {
-        transform: scale(6.0);
-        opacity: 0.1;
-        color: grey;
+        /* transform: scale(6.0); */
+        opacity: 1;
+        color: red;
     }
 
     20% {
-        transform: scale(1.0);
-        opacity: 0.5;
-        color: black;
+        /* transform: scale(1.0); */
+        opacity: 5;
+        color: red;
     }
 
     100% {
-        transform: scale(1.0);
-        opacity: 0.5;
+        /* transform: scale(1.0); */
+        opacity: 1;
         color: black;
     }
 }

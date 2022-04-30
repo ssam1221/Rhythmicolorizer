@@ -55,9 +55,9 @@ import GamePlayScreenController from "./GamePlayScreenController"
         // })();
 
         LoadingController.hideInitialLoading();
-        // await TitleScreenController.initialize();
+        await TitleScreenController.initialize();
 
-        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
+        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
 
         // Test
         // BGMSelector.playBGMPreview();
@@ -67,14 +67,14 @@ import GamePlayScreenController from "./GamePlayScreenController"
 
         // Game Play Test
         // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.TitleScreen);
-        DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
-        let clicked = false;
-        document.onclick = async (e) => {
-            if (clicked === false) {
-                clicked = true;
-                // GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteRenderController.Difficulty.HARD);
-                GamePlayScreenController.startGameByTitle(`아기 알파카는 오늘도 꿈을 꾸고 있어요`, NoteRenderController.Difficulty.NORMAL);
-            }
-        }
+        // DOMConatiners.showMainContainer(DOMConatiners.MainContainer.GamePlayScreen);
+        // let clicked = false;
+        // document.onclick = async (e) => {
+        //     if (clicked === false) {
+        //         clicked = true;
+        //         // GamePlayScreenController.startGameByTitle(`두근두근! 드디어!! 대모험 시작!!!`, NoteRenderController.Difficulty.HARD);
+        //         GamePlayScreenController.startGameByTitle(`아기 알파카는 오늘도 꿈을 꾸고 있어요`, NoteRenderController.Difficulty.NORMAL);
+        //     }
+        // }
     };
 })();

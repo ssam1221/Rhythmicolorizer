@@ -6,12 +6,24 @@ import NoteRenderController from "../GamePlayScreen/NoteRenderController";
 
 export default class KeyboardEventListener {
 
+    static delegateKeyEvent({
+        event,
+        eventObject
+    }) {
+        if (`keyPressHandler` in window.parent) {
+            window.parent.keyPressHandler({
+                event: event,
+                key: eventObject.key
+            });
+        }
+    }
+
     static addKeyboardEventListener() {
         document.addEventListener(`keydown`, (e) => {
             // console.log(`addKeyboardEventListener : `, e)
-            window.parent.keyPressHandler({
+            this.delegateKeyEvent({
                 event: `keydown`,
-                key: e.key
+                eventObject: e.key
             });
             switch (DOMConatiners.getCurrentMainContainerName()) {
                 case ``:
@@ -36,9 +48,9 @@ export default class KeyboardEventListener {
 
         document.addEventListener(`keyup`, (e) => {
             // console.log(`addKeyboardEventListener : `, e)
-            window.parent.keyPressHandler({
-                event: `keyup`,
-                key: e.key
+            this.delegateKeyEvent({
+                event: `keydown`,
+                eventObject: e.key
             });
 
             switch (DOMConatiners.getCurrentMainContainerName()) {
